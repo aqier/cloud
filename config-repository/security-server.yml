@@ -9,14 +9,14 @@ spring:
     weiXin: 
       filterProcessesUrl: /qqLogin
       providerId: weixin
-      appId: wxd99431bbff8305a0
-      appSecret: 60f78681d063590a469f1b297feff3c4
+      appId: '{cipher}4481311dd8e5de2cef2ff3d1abdf8515bcf03c8efd23100e0436eecbf2a7d60b156411564876acbf71b2ff877ed49e39'
+      appSecret: '{cipher}493eb3d07685e098f913c534a3dd64c2594498d1c53b9ac3f655344e6057d9768c3a10031f0ebfcbbd35892e06415117e5bdf5d1690a4aff2eb466072f2875f5'
 
 security: 
   oauth2: 
     client: 
-      clientId: aqier
-      clientSecret: aqierSecret
+      clientId: '{cipher}d2aaf0a82c784d91d5eaaea618003730bd0837d307ad04b9ae685d23df43611d'
+      clientSecret: '{cipher}1013dd4437447f9f43b18e63535067cc3880219ef4fcb6e39adf0ea5b84ec21b'
 
 logging: 
   level: 
