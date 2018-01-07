@@ -1,6 +1,3 @@
-encrypt:
-  key: ${aqier_cloud_key}
-
 security:
     basic:
       enabled: true
