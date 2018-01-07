@@ -1,0 +1,24 @@
+server: 
+  session: 
+    timeout: 1800 #session 超时时间(秒), 最小1分钟, 更改此参数不会导致已经存在Redis中的session超时时间发生变化(亲测)
+
+spring:
+  session:
+    storeType: redis
+  social: 
+    weiXin: 
+      filterProcessesUrl: /qqLogin
+      providerId: weixin
+      appId: wxd99431bbff8305a0
+      appSecret: 60f78681d063590a469f1b297feff3c4
+
+security: 
+  oauth2: 
+    client: 
+      clientId: aqier
+      clientSecret: aqierSecret
+
+logging: 
+  level: 
+    root: INFO
+    org.springframework: DEBUG

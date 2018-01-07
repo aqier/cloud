@@ -1,0 +1,67 @@
+encrypt:
+  key: ${aqier_cloud_key}
+
+security:
+    basic:
+      enabled: true
+    user:
+      name: '{cipher}387648ed133d3fad455ca99f3554d1e16d968afce4d3617b3bbeb70f2c10ef0a242f4817f403891b0e3ada864283631b3b20870e17f146e41191880baed629b0'
+      password: '{cipher}03bf8ee00546e91fa90bb41cf8459c0e60b2771c52838e6051b33d7194c4cb6845aa324b75b270c1deab6759f63cda570a4a65465a5ac372820d9806bd0d4c4c'
+
+eureka:
+  instance:
+    securePort: ${server.port}
+    securePortEnabled: true #访问eureka上注册的HTTPS服务, 貌似验证不通过
+    nonSecurePortEnabled: false #访问eureka上注册的HTTPS服务, 貌似验证不通过
+    hostname: cloud.aqier.com
+    leaseExpirationDurationInSeconds: 6 #Eureka服务器在接收到实例的最后一次发出的心跳后，需要等待多久才可以将此实例删除，默认为90秒, 这里设置6秒, 即快速响应, 服务一旦不可用立即移除
+    leaseRenewalIntervalInSeconds: 2 #eureka客户需要多长时间发送心跳给eureka服务器，表明它仍然活着,默认为30 秒
+    metadataMap: 
+      hostname: ${eureka.instance.hostname}
+      securePort: ${server.port}
+  client:
+    serviceUrl:
+      defaultZone: https://${security.user.name}:${security.user.password}@${eureka.instance.hostname}:8889/eureka/
+    registerWithEureka: true #实例是否在eureka服务器上注册自己的信息以供其他服务发现，默认为true, 这里没有配置eureka地址, 不能启用
+    fetchRegistry: true #此客户端是否获取eureka服务器注册表上的注册信息，默认为true
+
+server:
+  ssl: #启用HTTPS
+    enabled: true
+    keyStore: https://${spring.cloud.config.username}:${spring.cloud.config.password}@cloud.aqier.com:8888/getCert
+    keyStorePassword: '{cipher}e804f4acd981cdc39a85a64abdd05a0a86058b74779f346c4696d891b75eaeddfe00f1b95b0485d574525fcfd61b745c85e476a22ae438528fd2a020350508a6'
+    keyStoreType: PKCS12
+    keyAlias: aqier
+
+logger:
+  level:
+    root: INFO
+    com.aqier: DEBUG
+    org.mybatis: DEBUG
+
+spring:
+  datasource:
+    port: 8887 #指定端口
+    url: jdbc:h2:tcp://localhost:${spring.datasource.port}/~/aqier #jdbc:mysql://cloud.aqier.com:3306/aqier
+    driverClassName: org.h2.Driver #com.mysql.jdbc.Driver
+    username: '{cipher}cbb0b63f3112f18cc054d3a025e7db97d6fb9ecbec3af17234ec073707a8d6d0'
+    password: '{cipher}7df73bc4bbbba33ebfcf14929a43b98b8dab75e2d954d159d051e24613b85ef4'
+    maxIdle: 10
+    maxWait: 3000
+    minIdle: 5
+    initialSize: 5
+    validationQuery: SELECT 1
+    testOnBorrow: false
+    testWhileIdle: true
+    timeBetweenEvictionRunsMillis: 18800
+    
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    joda-date-time-format: yyyy-MM-dd HH:mm:ss
+    
+  redis:
+    host: cloud.aqier.com
+    port: 6379
+    password: '{cipher}7df73bc4bbbba33ebfcf14929a43b98b8dab75e2d954d159d051e24613b85ef4'
+    timeout: 1800
+        

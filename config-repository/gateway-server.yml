@@ -1,0 +1,28 @@
+endpoints:
+  restart:
+    enabled: true
+  shutdown:
+    enabled: true
+  health:
+    sensitive: false
+
+zuul:
+  ignoredPatterns: /health,/error
+  retryable: true
+  routes:
+    system-manager:
+      path: /system/**
+      serviceId: AQIER-SYSTEM-MANAGER
+    sso-server:
+      path: /sso/**
+      serviceId: AQIER-SSO-SERVER
+    database-server:
+      path: /database/**
+      serviceId: AQIER-DATABASE-SERVER
+
+ribbon:
+  readTimeout: 60000
+  connectTimeout: 60000
+  maxAutoRetries: 0
+  isSecure: true
+  #maxAutoRetriesNextServer: 1
