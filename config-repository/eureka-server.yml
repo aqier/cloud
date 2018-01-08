@@ -6,7 +6,7 @@ eureka:
     registerWithEureka: false #实例是否在eureka服务器上注册自己的信息以供其他服务发现，默认为true, 现改成true无法启动Eureka
     fetchRegistry: false #此客户端是否获取eureka服务器注册表上的注册信息，默认为true
 
-logging:
+logger:
   level:
     root: INFO
-    com.netflix.eureka.registry.AbstractInstanceRegistry$EvictionTask: WARN
+    com.netflix.eureka.registry.AbstractInstanceRegistry: WARN
