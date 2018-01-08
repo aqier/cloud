@@ -8,4 +8,5 @@ eureka:
 
 logging:
   level:
-    com.netflix.eureka.registry.AbstractInstanceRegistry: WARN
+    root: INFO
+    com.netflix.eureka.registry.AbstractInstanceRegistry$EvictionTask: WARN
