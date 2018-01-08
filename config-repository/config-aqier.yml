@@ -24,7 +24,7 @@ eureka:
 
 server: 
   tomcat: 
-    maxThreads: 20
+    maxThreads: 5
   ssl: #启用HTTPS
     enabled: true
     keyStore: https://${spring.cloud.config.username}:${spring.cloud.config.password}@cloud.aqier.com:8888/getCert
