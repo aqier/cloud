@@ -3,7 +3,7 @@ security:
       enabled: true
     user:
       name: '{cipher}4ca754ebea60484e9e1a5a480a7c7f68382e4a463d03a35b968f88335a5f33e2'
-      password: '{cipher}1734a2d5e5b63e5f80226cb4f75688f22396dd6a3a943e9c9c494e346d43a5dda7f1912e762e887a19d3e42ba6cff43e'
+      password: '{cipher}78c8e4d3e081f1c395b2bff6c64b4366ad8b1dfaef67dfa04161f8546bd654160b18f8dfab574068d4b89004610adc78'
 
 eureka:
   instance:
