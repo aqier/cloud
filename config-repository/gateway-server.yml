@@ -27,15 +27,18 @@ zuul:
       serviceId: AQIER-DATABASE-SERVER
 
 ribbon:
-  ReadTimeout: ${gateway.timeout:60000}
-  ConnectTimeout: ${gateway.timeout:60000}
+  readTimeout: ${gateway.timeout:60000}
+  connectTimeout: ${gateway.timeout:60000}
   maxAutoRetries: 0
+  maxAutoRetriesNextServer: 0
   isSecure: true
-  #maxAutoRetriesNextServer: 1
 
 hystrix:
   command:
     default:
       execution:
         timeout:
-          enabled: false #禁用网关超时时间
+          enabled: true #禁用网关超时时间
+        isolation:
+          thread:
+            timeoutInMilliseconds: ${gateway.timeout:60000}
