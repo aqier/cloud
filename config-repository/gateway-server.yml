@@ -21,8 +21,8 @@ zuul:
       serviceId: AQIER-DATABASE-SERVER
 
 ribbon:
-  readTimeout: 60000
-  connectTimeout: 60000
+  ReadTimeout: 60000
+  ConnectTimeout: 60000
   maxAutoRetries: 0
   isSecure: true
   #maxAutoRetriesNextServer: 1
