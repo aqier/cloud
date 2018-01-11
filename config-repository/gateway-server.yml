@@ -18,7 +18,6 @@ endpoints:
 zuul: #参见 org.springframework.cloud.netflix.zuul.filters.ZuulProperties
   ignoredPatterns: /health,/error
   retryable: false #是否重试
-  ribbonIsolationStrategy: THREAD
   host:
     socketTimeoutMillis: ${gateway.timeout:60000}
     connectTimeoutMillis: ${gateway.timeout:60000}
@@ -56,3 +55,27 @@ hystrix:
             ribbon:
               ReadTimeout: ${gateway.timeout:60000}
               ConnectTimeout: ${gateway.timeout:60000}
+    #参见: https://cloud.spring.io/spring-cloud-static/spring-cloud-netflix/2.0.0.M5/single/spring-cloud-netflix.html#_hystrix_timeouts_and_ribbon_clients
+    AQIER-DATABASE-SERVER:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: ${gateway.timeout:60000}
+    AQIER-SYSTEM-MANAGER:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: ${gateway.timeout:60000}
+    AQIER-SSO-SERVER:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: ${gateway.timeout:60000}
+
+AQIER-DATABASE-SERVER:
+  ribbon:
+    ConnectTimeout: ${gateway.timeout:60000}
+    ReadTimeout: ${gateway.timeout:60000}
+    #MaxTotalHttpConnections: 500
+    #MaxConnectionsPerHost: 100
+
