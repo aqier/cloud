@@ -14,7 +14,7 @@ eureka:
     leaseExpirationDurationInSeconds: 6 #Eureka服务器在接收到实例的最后一次发出的心跳后，需要等待多久才可以将此实例删除，默认为90秒, 这里设置6秒, 即快速响应, 服务一旦不可用立即移除
     leaseRenewalIntervalInSeconds: 2 #eureka客户需要多长时间发送心跳给eureka服务器，表明它仍然活着,默认为30 秒
     preferIpAddress: true #注册时是否使用IP(false时使用主机名)
-    ipAddress: 172.27.232.5 #与 preferIpAddress 一起使用 ${spring.cloud.client.ipAddress}:${server.port}
+    #ipAddress: 172.27.232.5 #与 preferIpAddress 一起使用.${spring.cloud.client.ipAddress}:${server.port}
     metadataMap: 
       hostname: ${server.hostname}
       securePort: ${server.port}
@@ -43,7 +43,8 @@ logger:
 spring:
   cloud: 
     inetutils: 
-      ignoredInterfaces[0]: eth0 # 忽略eth0, 支持正则表达式
+      preferredNetworks: ^172  #设置推荐网络IP正则表达式
+      #ignoredInterfaces[0]: eth0 # 忽略eth0, 支持正则表达式
   datasource:
     port: 8887 #指定端口
     url: jdbc:h2:tcp://localhost:${spring.datasource.port}/~/aqier #jdbc:mysql://cloud.aqier.com:3306/aqier
