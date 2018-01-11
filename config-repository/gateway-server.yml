@@ -15,9 +15,10 @@ endpoints:
   health:
     sensitive: false
 
-zuul:
+zuul: #参见 org.springframework.cloud.netflix.zuul.filters.ZuulProperties
   ignoredPatterns: /health,/error
-  #retryable: false #是否重试, 没用
+  retryable: false #是否重试
+  ribbonIsolationStrategy: THREAD
   host:
     socketTimeoutMillis: ${gateway.timeout:60000}
     connectTimeoutMillis: ${gateway.timeout:60000}
