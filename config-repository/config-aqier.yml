@@ -20,7 +20,7 @@ eureka:
       securePort: ${server.port}
   client:
     serviceUrl:
-      defaultZone: https://${security.user.name}:${security.user.password}@cloud.aqier.com:8889/eureka/
+      defaultZone: https://${security.user.name}:${security.user.password}@172.31.26.217:8889/eureka/
     registerWithEureka: true #实例是否在eureka服务器上注册自己的信息以供其他服务发现，默认为true, 这里没有配置eureka地址, 不能启用
     fetchRegistry: true #此客户端是否获取eureka服务器注册表上的注册信息，默认为true
 
@@ -29,7 +29,7 @@ server:
     maxThreads: 5
   ssl1: #启用HTTPS
     enabled: true
-    keyStore: https://${spring.cloud.config.username}:${spring.cloud.config.password}@172.31.26.217:8888/getCert
+    keyStore: https://${spring.cloud.config.username}:${spring.cloud.config.password}@cloud.aqier.com:8888/getCert
     keyStorePassword: '{cipher}e804f4acd981cdc39a85a64abdd05a0a86058b74779f346c4696d891b75eaeddfe00f1b95b0485d574525fcfd61b745c85e476a22ae438528fd2a020350508a6'
     keyStoreType: PKCS12
     keyAlias: aqier
