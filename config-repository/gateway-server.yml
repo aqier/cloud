@@ -26,3 +26,10 @@ ribbon:
   maxAutoRetries: 0
   isSecure: true
   #maxAutoRetriesNextServer: 1
+
+hystrix:
+  command:
+    default:
+      execution:
+        timeout:
+          enabled: false #禁用网关超时时间
