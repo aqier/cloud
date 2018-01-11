@@ -43,23 +43,15 @@ ribbon:
 hystrix:
   command:
     default:
+      coreSize: 200 #并发执行的最大线程数，默认10
+      maxQueueSize: 200 #BlockingQueue的最大队列数
+      queueSizeRejectionThreshold: 50 #即使maxQueueSize没有达到，达到queueSizeRejectionThreshold该值后，请求也会被拒绝
       execution:
         timeout:
           enabled: true #禁用网关超时时间
         isolation:
           thread:
             timeoutInMilliseconds: ${gateway.timeout:60000}
-  threadpool:
-    default:
-      coreSize: 200 #并发执行的最大线程数，默认10
-      maxQueueSize: 200 #BlockingQueue的最大队列数
-      queueSizeRejectionThreshold: 50 #即使maxQueueSize没有达到，达到queueSizeRejectionThreshold该值后，请求也会被拒绝
-      execution:
-        timeout:
-          enabled: true
-        isolation:
-          strategy: THREAD
-          semaphore:
-            maxConcurrentRequests: 1000
-          thread:
-            timeoutInMilliseconds: ${gateway.timeout:60000}
+            ribbon:
+              ReadTimeout: ${gateway.timeout:60000}
+              ConnectTimeout: ${gateway.timeout:60000}
