@@ -1,6 +1,12 @@
 gateway:
   timeout: 60000 #gateway超时时间公共变量
 
+spring:
+  cloud:
+    loadbalancer:
+      retry:
+        enable: false
+
 endpoints:
   restart:
     enabled: true
@@ -11,7 +17,7 @@ endpoints:
 
 zuul:
   ignoredPatterns: /health,/error
-  retryable: false #是否重试
+  #retryable: false #是否重试, 没用
   host:
     socketTimeoutMillis: ${gateway.timeout:60000}
     connectTimeoutMillis: ${gateway.timeout:60000}
@@ -31,6 +37,7 @@ ribbon:
   ConnectTimeout: ${gateway.timeout:60000}
   MaxAutoRetries: 0
   MaxAutoRetriesNextServer: 0
+  OkToRetryOnAllOperations: false # 不启用重试后, MaxAutoRetries/MaxAutoRetriesNextServer 就没用了?
   IsSecure: true
 
 hystrix:
