@@ -27,11 +27,11 @@ zuul:
       serviceId: AQIER-DATABASE-SERVER
 
 ribbon:
-  readTimeout: ${gateway.timeout:60000}
-  connectTimeout: ${gateway.timeout:60000}
-  maxAutoRetries: 0
-  maxAutoRetriesNextServer: 0
-  isSecure: true
+  ReadTimeout: ${gateway.timeout:60000}
+  ConnectTimeout: ${gateway.timeout:60000}
+  MaxAutoRetries: 0
+  MaxAutoRetriesNextServer: 0
+  IsSecure: true
 
 hystrix:
   command:
