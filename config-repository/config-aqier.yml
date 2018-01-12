@@ -32,7 +32,7 @@ server:
     keyStore: https://${spring.cloud.config.username}:${spring.cloud.config.password}@cloud.aqier.com:8888/getCert
     keyStorePassword: '{cipher}e804f4acd981cdc39a85a64abdd05a0a86058b74779f346c4696d891b75eaeddfe00f1b95b0485d574525fcfd61b745c85e476a22ae438528fd2a020350508a6'
     keyStoreType: PKCS12
-    keyAlias: aqier
+    #keyAlias: aqier
 
 logger:
   level:
