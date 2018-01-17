@@ -71,7 +71,8 @@ spring:
     password: '{cipher}7df73bc4bbbba33ebfcf14929a43b98b8dab75e2d954d159d051e24613b85ef4'
     timeout: 1800
   mail: #JavaMailSender
-    host: '{cipher}2603eca1783047b95da366207344c3f7537a6c41a93f5a67998d3bc1a3f6b623'
+    host: '{cipher}954b438f36aaf90d914fca1e0e9f5fdcc50aae744f36d1013d63d91756dcac6a'
+    port: 465
     from: '{cipher}d1348d5d26f3da0ae295f14305136b4e94a480a7d511833fa9352020a2f6def4'
     username: '{cipher}d1348d5d26f3da0ae295f14305136b4e94a480a7d511833fa9352020a2f6def4'
     password: '{cipher}a59f798fd56a397729c84ba22e83a3e9d87546ebd0a37d9aba05965c18f17f7d'
