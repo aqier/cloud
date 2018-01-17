@@ -33,6 +33,7 @@ server:
     keyStorePassword: '{cipher}e804f4acd981cdc39a85a64abdd05a0a86058b74779f346c4696d891b75eaeddfe00f1b95b0485d574525fcfd61b745c85e476a22ae438528fd2a020350508a6'
     keyStoreType: PKCS12
     #keyAlias: aqier
+  domain: ${server.domain:ec2-52-76-146-65.ap-southeast-1.compute.amazonaws.com}
 
 logger:
   level:
