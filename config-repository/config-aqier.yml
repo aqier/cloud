@@ -76,3 +76,10 @@ spring:
     from: '{cipher}d1348d5d26f3da0ae295f14305136b4e94a480a7d511833fa9352020a2f6def4'
     username: '{cipher}d1348d5d26f3da0ae295f14305136b4e94a480a7d511833fa9352020a2f6def4'
     password: '{cipher}a59f798fd56a397729c84ba22e83a3e9d87546ebd0a37d9aba05965c18f17f7d'
+    properties:
+      mail.smtp.auth: true
+      mail.smtp.starttls.enable: true
+      mail.smtp.socketFactory.class: javax.net.ssl.SSLSocketFactory
+      mail.smtp.timeout: 30000
+      
+      
