@@ -48,6 +48,7 @@ spring:
       #ignoredInterfaces[0]: eth0 # 忽略eth0, 支持正则表达式
   datasource:
     port: 8887 #指定端口
+    #type: com.alibaba.druid.pool.DruidDataSource #使用druid数据源
     url: jdbc:h2:tcp://localhost:${spring.datasource.port}/~/aqier #jdbc:mysql://cloud.aqier.com:3306/aqier
     driverClassName: org.h2.Driver #com.mysql.jdbc.Driver
     username: '{cipher}cbb0b63f3112f18cc054d3a025e7db97d6fb9ecbec3af17234ec073707a8d6d0'
