@@ -17,8 +17,3 @@ security:
     client: 
       clientId: '{cipher}d2aaf0a82c784d91d5eaaea618003730bd0837d307ad04b9ae685d23df43611d'
       clientSecret: '{cipher}1013dd4437447f9f43b18e63535067cc3880219ef4fcb6e39adf0ea5b84ec21b'
-
-logging: 
-  level: 
-    root: INFO
-    org.springframework: DEBUG
