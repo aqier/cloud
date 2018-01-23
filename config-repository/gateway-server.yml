@@ -1,11 +1,12 @@
 gateway:
   timeout: 60000 #gateway超时时间公共变量
+  retryable: false #gateway是否重试公共变量
 
 spring:
   cloud:
     loadbalancer:
-      retry:
-        enable: false
+      retry: # 加了 zuul.retryable 貌似就行了
+        enable: ${gateway.retryable}
 
 endpoints:
   restart:
@@ -17,10 +18,10 @@ endpoints:
 
 zuul: #参见 org.springframework.cloud.netflix.zuul.filters.ZuulProperties
   ignoredPatterns: /health,/error
-  retryable: false #是否重试
+  retryable: ${gateway.retryable} #是否重试
   host:
-    socketTimeoutMillis: ${gateway.timeout:60000}
-    connectTimeoutMillis: ${gateway.timeout:60000}
+    socketTimeoutMillis: ${gateway.timeout}
+    connectTimeoutMillis: ${gateway.timeout}
   routes:
     system-manager:
       path: /system/**
@@ -33,8 +34,8 @@ zuul: #参见 org.springframework.cloud.netflix.zuul.filters.ZuulProperties
       serviceId: AQIER-DATABASE-SERVER
 
 ribbon:
-  ReadTimeout: ${gateway.timeout:60000}
-  ConnectTimeout: ${gateway.timeout:60000}
+  ReadTimeout: ${gateway.timeout}
+  ConnectTimeout: ${gateway.timeout}
   MaxAutoRetries: 0
   MaxAutoRetriesNextServer: 0
   OkToRetryOnAllOperations: false # 不启用重试后, MaxAutoRetries/MaxAutoRetriesNextServer 就没用了?
@@ -48,34 +49,34 @@ hystrix:
       queueSizeRejectionThreshold: 50 #即使maxQueueSize没有达到，达到queueSizeRejectionThreshold该值后，请求也会被拒绝
       execution:
         timeout:
-          enabled: true #禁用网关超时时间
+          enabled: true #false:禁用网关超时时间
         isolation:
           thread:
-            timeoutInMilliseconds: ${gateway.timeout:60000}
+            timeoutInMilliseconds: ${gateway.timeout}
             ribbon:
-              ReadTimeout: ${gateway.timeout:60000}
-              ConnectTimeout: ${gateway.timeout:60000}
+              ReadTimeout: ${gateway.timeout}
+              ConnectTimeout: ${gateway.timeout}
     #参见: https://cloud.spring.io/spring-cloud-static/spring-cloud-netflix/2.0.0.M5/single/spring-cloud-netflix.html#_hystrix_timeouts_and_ribbon_clients
     AQIER-DATABASE-SERVER:
       execution:
         isolation:
           thread:
-            timeoutInMilliseconds: ${gateway.timeout:60000}
+            timeoutInMilliseconds: ${gateway.timeout}
     AQIER-SYSTEM-MANAGER:
       execution:
         isolation:
           thread:
-            timeoutInMilliseconds: ${gateway.timeout:60000}
+            timeoutInMilliseconds: ${gateway.timeout}
     AQIER-SSO-SERVER:
       execution:
         isolation:
           thread:
-            timeoutInMilliseconds: ${gateway.timeout:60000}
+            timeoutInMilliseconds: ${gateway.timeout}
 
 AQIER-DATABASE-SERVER:
   ribbon:
-    ConnectTimeout: ${gateway.timeout:60000}
-    ReadTimeout: ${gateway.timeout:60000}
+    ConnectTimeout: ${gateway.timeout}
+    ReadTimeout: ${gateway.timeout}
     #MaxTotalHttpConnections: 500
     #MaxConnectionsPerHost: 100
 
