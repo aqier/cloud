@@ -68,7 +68,7 @@ spring:
     
   redis:
     host: cloud.aqier.com
-    port: 6379
+    port: 8086
     password: '{cipher}7df73bc4bbbba33ebfcf14929a43b98b8dab75e2d954d159d051e24613b85ef4'
     timeout: 1800
   mail: #JavaMailSender
