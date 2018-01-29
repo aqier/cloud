@@ -38,8 +38,8 @@ eureka:
 logging:
   level:
     root: INFO
-    com.aqier: ${logging.level:DEBUG}
-    org.mybatis: ${logging.level:DEBUG}
+    com.aqier.web.cloud: ${logging.level:DEBUG}
+    org.apache.ibatis.logging.jdbc.BaseJdbcLogger: ${logging.level:DEBUG} #打印SQL
 
 spring:
   cloud: 
