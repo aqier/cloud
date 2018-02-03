@@ -6,6 +6,7 @@ security:
       password: '{cipher}78c8e4d3e081f1c395b2bff6c64b4366ad8b1dfaef67dfa04161f8546bd654160b18f8dfab574068d4b89004610adc78'
 
 server: 
+  timeout: 60000
   tomcat: 
     maxThreads: 5
   ssl: #启用HTTPS
@@ -82,5 +83,11 @@ spring:
       mail.smtp.starttls.enable: true
       mail.smtp.socketFactory.class: javax.net.ssl.SSLSocketFactory
       mail.smtp.timeout: 30000
-      
-      
+
+ribbon:
+  ReadTimeout: ${server.timeout}
+  ConnectTimeout: ${server.timeout}
+  MaxAutoRetries: 0
+  MaxAutoRetriesNextServer: 0
+  OkToRetryOnAllOperations: false # 不启用重试后, MaxAutoRetries/MaxAutoRetriesNextServer 就没用了?
+  IsSecure: true
