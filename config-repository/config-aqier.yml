@@ -8,9 +8,9 @@ security:
 domain:
   server: 
     default: ${domain.default:localhost.aqier.com}
-    redis:   ${domain.redis:  localhost.aqier.com}
-    config:  ${domain.config: cloud.aqier.com}
-    eureka:  ${domain.eureka: cloud.aqier.com}
+    redis:   ${domain.redis:localhost.aqier.com}
+    config:  ${domain.config:cloud.aqier.com}
+    eureka:  ${domain.eureka:cloud.aqier.com}
     gateway: ${domain.gateway:cloud.aqier.com}
 
 server: 
