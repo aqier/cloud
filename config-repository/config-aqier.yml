@@ -8,10 +8,10 @@ security:
 domain:
   server: 
     default: ${domain.default:localhost.aqier.com}
-    redis:   ${domain.redis:localhost.aqier.com}
-    config:  ${domain.config:cloud.aqier.com}
-    eureka:  ${domain.eureka:cloud.aqier.com}
-    gateway: ${domain.gateway:cloud.aqier.com}
+    redis:   ${domain.redis:${domain.server.default:localhost.aqier.com}}
+    config:  ${domain.config:${domain.server.default:localhost.aqier.com}}
+    eureka:  ${domain.eureka:${domain.server.default:localhost.aqier.com}}
+    gateway: ${domain.gateway:${domain.server.default:localhost.aqier.com}}
 
 server: 
   timeout: 60000
