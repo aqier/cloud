@@ -6,12 +6,11 @@ security:
       password: '{cipher}78c8e4d3e081f1c395b2bff6c64b4366ad8b1dfaef67dfa04161f8546bd654160b18f8dfab574068d4b89004610adc78'
 
 domain:
-  server: 
-    default: ${domain.default:localhost.aqier.com}
-    redis:   ${domain.redis:${domain.server.default}}
-    config:  ${domain.config:${domain.server.default}}
-    eureka:  ${domain.eureka:${domain.server.default}}
-    gateway: ${domain.gateway:${domain.server.default}}
+  default: ${domain.default.value:localhost.aqier.com}
+  redis:   ${domain.redis.value:${domain.default}}
+  config:  ${domain.config.value:${domain.default}}
+  eureka:  ${domain.eureka.value:${domain.default}}
+  gateway: ${domain.gateway.value:${domain.default}}
 
 server: 
   timeout: 60000
@@ -19,7 +18,7 @@ server:
     maxThreads: 5
   ssl: #启用HTTPS
     enabled: true
-    keyStore: ${server.protocol:https}://${security.user.name}:${security.user.password}@${domain.server.config}:${config.port:8888}/getCert
+    keyStore: ${protocol.config:https}://${security.user.name}:${security.user.password}@${domain.config}:${config.port:8888}/getCert
     keyStorePassword: '{cipher}e804f4acd981cdc39a85a64abdd05a0a86058b74779f346c4696d891b75eaeddfe00f1b95b0485d574525fcfd61b745c85e476a22ae438528fd2a020350508a6'
     keyStoreType: PKCS12
     #keyAlias: aqier
@@ -29,17 +28,17 @@ eureka:
     securePort: ${server.port}
     securePortEnabled: true #访问eureka上注册的HTTPS服务, 貌似验证不通过
     nonSecurePortEnabled: false #访问eureka上注册的HTTPS服务, 貌似验证不通过
-    hostname: ${domain.server.default} #配置当前服务节点的 主机名, preferIpAddress = false时生效, 公共配置不需要
+    hostname: ${server.domain:${domain.default}} #配置当前服务节点的 主机名, preferIpAddress = false时生效, 公共配置不需要
     leaseExpirationDurationInSeconds: 10 #Eureka服务器在接收到实例的最后一次发出的心跳后，需要等待多久才可以将此实例删除，默认为90秒, 这里设置10秒, 即快速响应, 服务一旦不可用立即移除
     leaseRenewalIntervalInSeconds: 5 #eureka客户端需要多长时间发送心跳给eureka服务器，表明它仍然活着,默认为30 秒
-    preferIpAddress: true #注册时是否使用IP(false时使用主机名, 配合hostname)
+    preferIpAddress: false #注册时是否使用IP(false时使用主机名, 配合hostname)
     #ipAddress: 172.27.232.5 #与 preferIpAddress 一起使用可指定IP
     metadataMap: 
       hostname: ${eureka.instance.hostname}
       securePort: ${server.port}
   client:
     serviceUrl:
-      defaultZone: ${server.protocol:https}://${security.user.name}:${security.user.password}@${domain.server.eureka}:${eureka.port:8889}/eureka/
+      defaultZone: ${protocol.eureka:https}://${security.user.name}:${security.user.password}@${domain.eureka}:${port.eureka:8889}/eureka/
     registerWithEureka: true #实例是否在eureka服务器上注册自己的信息以供其他服务发现，默认为true, 这里没有配置eureka地址, 不能启用
     fetchRegistry: true #此客户端是否获取eureka服务器注册表上的注册信息，默认为true
 
@@ -75,7 +74,7 @@ spring:
     joda-date-time-format: yyyy-MM-dd HH:mm:ss
     
   redis:
-    host: ${domain.server.redis}
+    host: ${domain.redis}
     port: ${port.redis:8086}
     password: '{cipher}7df73bc4bbbba33ebfcf14929a43b98b8dab75e2d954d159d051e24613b85ef4'
     timeout: 1800
