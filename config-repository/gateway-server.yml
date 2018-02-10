@@ -18,6 +18,8 @@ endpoints:
 
 zuul: #参见 org.springframework.cloud.netflix.zuul.filters.ZuulProperties
   ignoredPatterns: /health,/error
+  sensitiveHeaders: #参考PreDecorationFilter, 设置敏感Header为空, 即不过滤响应头
+  addHostHeader: true
   retryable: ${gateway.retryable} #是否重试
   host:
     socketTimeoutMillis: ${gateway.timeout}
