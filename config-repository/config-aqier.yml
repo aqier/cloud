@@ -31,7 +31,7 @@ eureka:
     hostname: ${server.domain:${domain.default}} #配置当前服务节点的 主机名, preferIpAddress = false时生效, 公共配置不需要
     leaseExpirationDurationInSeconds: 10 #Eureka服务器在接收到实例的最后一次发出的心跳后，需要等待多久才可以将此实例删除，默认为90秒, 这里设置10秒, 即快速响应, 服务一旦不可用立即移除
     leaseRenewalIntervalInSeconds: 5 #eureka客户端需要多长时间发送心跳给eureka服务器，表明它仍然活着,默认为30 秒
-    preferIpAddress: true #注册时是否使用IP(false时使用主机名, 配合hostname)
+    preferIpAddress: false #注册时是否使用IP(false时使用主机名, 配合hostname)
     #ipAddress: 172.27.232.5 #与 preferIpAddress 一起使用可指定IP
     metadataMap: 
       hostname: ${eureka.instance.hostname}
@@ -56,6 +56,7 @@ spring:
   datasource:
     port: 8887 #指定端口
     #type: com.alibaba.druid.pool.DruidDataSource #使用druid数据源
+    #url: jdbc:h2:~/aqier
     url: jdbc:h2:tcp://localhost:${spring.datasource.port}/~/aqier #jdbc:mysql://cloud.aqier.com:3306/aqier
     driverClassName: org.h2.Driver #com.mysql.jdbc.Driver
     username: '{cipher}cbb0b63f3112f18cc054d3a025e7db97d6fb9ecbec3af17234ec073707a8d6d0'
