@@ -3,7 +3,7 @@ server:
 
 spring:
   application:
-    name: AQIER-NOVEL-DOWNLOADER
+    name: AQIER-BOOK-DOWNLOADER
   session:
     storeType: HASH_MAP
   datasource:
