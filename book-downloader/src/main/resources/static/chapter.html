@@ -1,0 +1,59 @@
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
+<script type="text/javascript">
+function readClick(num) {
+	var hash = window.location.hash;
+	var serialNumber = Aqier.getUrlParam("serialNumber");
+	serialNumber = parseInt(serialNumber) + num;
+	if(serialNumber <= 0) {
+		return;
+	}
+	var hash = Aqier.changeParam(hash, "serialNumber", serialNumber);
+	Aqier.changeHashNoRefresh(hash);
+	readChapter(num);
+}
+function readChapter(num) {
+	if(num == 0) {
+		window.location.hash = "novel.html";
+	}
+	var id = Aqier.getUrlParam("id");
+	var serialNumber = Aqier.getUrlParam("serialNumber");
+	if(serialNumber <= 0) {
+		return;
+	}
+	$("button").attr("disabled", true);
+	$("#content").html("<center>{[i18n.chapter.loading]}</center>");
+	Aqier.getJSON("./novel/getChapter?id="+id+"&serialNumber="+serialNumber, null, function(data) {
+		if(!Aqier.isBlank(data)) {
+			var content = data.content;
+			if(content == null) {
+				content = "";
+			}
+			content = Aqier.escapeHtml(content);
+			content = content.replace(/\t/g, "&nbsp;&nbsp;&nbsp;&nbsp;");
+			content = content.replace(/\n/g, "<p>");
+			content = "<center><b>"+data.title+"</b></center><br/>" + content;
+			$("#content").html(content);
+			$("#serialNumber").val(data.serialNumber);
+		}else {
+			$("#content").html("<center style='height:80%'>无法找到该章节</center>");
+		}
+		$("button").attr("disabled", false);
+	});
+}
+$(function() {
+	readChapter();
+});
+</script>
+<center class="read split-around">
+    <button type="button" class="btn btn-primary" onclick="readChapter(0)">{[i18n.chapter.homePage]}</button>&nbsp;&nbsp;
+	<button type="button" class="btn btn-primary" onclick="readClick(-1)">{[i18n.chapter.preChapter]}</button>&nbsp;&nbsp;
+	<button type="button" class="btn btn-primary" onclick="readClick(1)">{[i18n.chapter.nextChapter]}</button>
+	<input type="hidden" id="serialNumber" value="1" size="4"/>
+</center>
+<div id="content" class="read split-around"></div>
+<center class="read split-around">
+    <button type="button" class="btn btn-primary" onclick="readChapter(0)">{[i18n.chapter.homePage]}</button>&nbsp;&nbsp;
+	<button type="button" class="btn btn-primary" onclick="readClick(-1)">{[i18n.chapter.preChapter]}</button>&nbsp;&nbsp;
+	<button type="button" class="btn btn-primary" onclick="readClick(1)">{[i18n.chapter.nextChapter]}</button>
+	<input type="hidden" id="serialNumber" value="1" size="4"/>
+</center>

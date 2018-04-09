@@ -1,0 +1,29 @@
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
+<script type="text/javascript">
+function getQueryParams(params) {
+	params.rows[0] = {
+		novelId : Aqier.getUrlParam("id"),
+		title : params.searchText
+	};
+	return params;
+}
+function read(serialNumber) {
+	Aqier.loadPage("chapter.html?serialNumber="+serialNumber+"&id="+Aqier.getUrlParam("id"));
+}
+$(".table").bootstrapTable({
+	url: "./novel/getChapters",
+    columns: [
+    	{
+            field: 'title',
+            title: '{[i18n.catalog.title]}'
+        }, {
+            field: 'serialNumber',
+            title: '{[i18n.catalog.operation]}',
+            formatter: function(value, row, index) {
+            	return '<button type="button" class="btn btn-primary" onclick="read(\''+value+'\')">{[i18n.catalog.read]}</button>';
+            }
+        }
+    ]
+});
+</script>
+<table class="table"></table>

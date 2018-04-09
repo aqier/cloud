@@ -1,0 +1,243 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<title>测试网格布局</title>
+<link rel="stylesheet" href="//lib.sinaapp.com/js/bootstrap/3.0.0/css/bootstrap.min.css" media="all"/>
+<script src="//lib.sinaapp.com/js/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+<script>
+//{[
+window.KM = JP;
+Aqier.local.zh_CN = { // 国际化
+    index : { // 主页
+        username : "用户名",
+        password : "密码",
+        validCode : "验证码",
+        search : "搜索",
+        loginSystem : "登录系统",
+        forgetPassword : "忘记密码?"
+    }
+};
+//]}
+</script>
+</head>
+<body>
+    <div class="container">
+        <div class="row split">
+            <div class="col-xs-5 col-md-6">
+                <a href="http://10.5.6.253:8080/km-ws/">
+                    <img src="http://10.5.6.253:8080/km-ws-resource/images/logo.png" alt="">
+                </a>
+            </div>
+            <div class="col-xs-7 col-md-6">
+                <ul class="nav nav-pills">
+                    <li class="active">
+                        <a href="#">首页</a>
+                    </li>
+                    <li>
+                        <a href="#/signup">注册</a>
+                    </li>
+                    <li>
+                        <a href="#{[Aqier.path.base]}/personal">个人中心</a>
+                    </li>
+                    <li>
+                        <a href="#{[Aqier.path.base]}/advice">咨询及建议</a>
+                    </li>
+                    <li>
+                        <a href="#{[Aqier.path.base]}/searchPage">查询项目</a>
+                    </li>
+                    <li>
+                        <a href="#{[Aqier.path.base]}/signin">登录</a>
+                    </li>
+                    <li>
+                        <a href="#{[Aqier.path.base]}/logout">退出</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="row" style="background-image: url({[Aqier.path.base]}-resource/images/img01.png); height: 240px;">
+            <div class="col-xs-4 col-md-3 col-xs-offset-8 col-md-offset-9" style="background: rgba(255, 255, 255, 0.7);">
+                <div class="row">
+                    <div class="col-xs-2 col-md-2" style="width: 45px; float: left;">
+                        <img src="{[Aqier.path.base]}-resource/images/wechat-background.png" alt="" width="38px" />
+                    </div>
+                    <div class="col-xs-2 col-md-2" style="width: 45px; float: left;">
+                        <img src="{[Aqier.path.base]}-resource/images/icon02.png" alt="" width="38px" />
+                    </div>
+                    <div class="col-xs-8 col-md-8" style="text-align: center; width: 130px; float: left;">
+                        <h6>
+                            &nbsp;全国统一服务热线 <small><a href="tel:4001111120">4001-111-120</a></small>
+                        </h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 没有登录时显示 -->
+        <div class="row split">
+            <!-- 登录区 -->
+            <div class="col-xs-4 col-md-4 form" data-action="fn(Aqier.path.base)/signin">
+                <input type="hidden" name="csrfRequestToken" value="d868d93550c1d3f04c3e1e1dc19fdb91" />
+                <!-- <input type="hidden" name="redirectURL" value="http%3A%2F%2Flocalhost%3A8080%2Fkm-ws%2Findex"/> -->
+                <!-- 登录背景图区 -->
+                <div class="row">
+                    <div class="col-xs-12 col-md-12">
+                        <label style="background: url({[Aqier.path.base]}-resource/images/icon30.png) no-repeat center; width: 100%; height: 50px;"> </label>
+                    </div>
+                </div>
+                <!-- 账号区 -->
+                <div class="row">
+                    <div class="col-xs-12 col-md-12">
+                        <label style="background: #1abd9b url({[Aqier.path.base]}-resource/images/icon31.png) no-repeat center; width: 10%; height: 34px;" for="userName"> </label>
+                        <input id="userName" name="userName" type="text" class="form-control" placeholder="{[Aqier.i18n('index.username')]}" style="width: 90%; float: right;" />
+                    </div>
+                </div>
+                <!-- 密码区 -->
+                <div class="row">
+                    <div class="col-xs-12 col-md-12">
+                        <label style="background: #1abd9b url({[Aqier.path.base]}-resource/images/icon32.png) no-repeat center; width: 10%; height: 34px;" for="password"> </label>
+                        <input id="password" name="password" type="password" class="form-control" placeholder="{[Aqier.i18n('index.password')]}" style="width: 90%; float: right;" />
+                    </div>
+                </div>
+                <!-- 验证码区 -->
+                <div class="row">
+                    <div class="col-xs-12 col-md-12">
+                        <img src="{[Aqier.path.base]}/kaptcha.jpg?" alt="" width="20%" height="34px;" onclick="this.src=this.src+'1'" />
+                        <input id="kaptcha" name="kaptcha" type="text" class="form-control" placeholder="{[Aqier.i18n('index.validCode')]}" style="width: 80%; float: right;" />
+                    </div>
+                </div>
+                <!-- 登录按钮区 -->
+                <div class="row split h-center">
+                    <div class="col-xs-6 col-md-6">
+                        <button type="button" class="btn btn-primary submit" style="width: 100%">{[Aqier.i18n('index.loginSystem')]}</button>
+                    </div>
+                    <div class="col-xs-6 col-md-6">
+                        <button type="button" class="btn btn-primary" style="width: 100%">{[Aqier.i18n('index.forgetPassword')]}</button>
+                    </div>
+                </div>
+            </div>
+            <!-- 右侧搜索简介区 -->
+            <div class="col-xs-8 col-md-8">
+                <!-- 搜索区 -->
+                <div class="row">
+                    <div class="col-xs-12 col-md-12">
+                        <input id="searchTermsInput" name="searchTermsInput" class="form-control search" type="text" />
+                        <button type="button" class="btn btn-primary search">{[Aqier.i18n('index.search')]}</button>
+                    </div>
+                </div>
+                <!-- 简介区 -->
+                <div id="">
+                    <div class="row">
+                        <div class="col-xs-12 col-md-12">
+                            <h2 style="color: #EE7C20; font-size: 18px; font-family: '微软雅黑';">平台简介</h2>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-md-12">
+                            <p>
+                                <span style="font-size: 14px;">
+                                    "Web自助平台"是我国综合实力最强、规模最大的第三方检验机构——金域集团，专为客户打造的一站式服务平台，力求为客户提供高品质的服务。 <br /> 搜索项目——客户可在线查询金域检验的1600余项检验项目。 <br /> 查询结果——客户可在登录后实时关注检验情况。 <br /> 咨询建议——客户可通过【咨询与建议】将需求传递至金域检验客服中心。 <br /> 金域检验始终以客户为中心，携手金域集团各部门，不断提升服务质量，为客户打造一个全方位、全视角、全生命周期的服务圈。 <br />
+                                </span>
+                            </p>
+                            <p style="padding-bottom: 20px; padding-left: 0px; padding-right: 0px; padding-top: 10px">
+                                <img src="{[Aqier.path.base]}-resource/images/20131212155307.jpg" width="100%">
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div id="searchProjectTableDiv" style="display: none;">
+                    <table id="searchProjectTable"></table>
+                </div>
+            </div>
+        </div>
+        <!-- 登录后显示 -->
+        <div class="row split hide">
+            <div class="col-xs-12 col-md-12">
+                <!-- 搜索区 -->
+                <div class="row">
+                    <div class="col-xs-12 col-md-12">
+                        <input id="searchTermsInput" name="searchTermsInput" class="form-control search" type="text" />
+                        <button type="button" class="btn btn-primary search">{[Aqier.i18n('index.search')]}</button>
+                    </div>
+                </div>
+                <!-- 搜索条件 第一行-->
+                <div class="row split">
+                    <div class="col-xs-2 col-md-2" style="margin-top:10px;padding-right:0px;text-align:right;">
+                        <label>时间：</label>
+                    </div>
+                    <div class="col-xs-2 col-md-2">
+                        <select id="recentTimeType" name="recentTimeType" class="form-control">
+                            <option value="sendDate" selected="">送检时间</option>
+                            <option value="reportDate">报告时间</option>
+                        </select>
+                    </div>
+                    <div class="col-xs-2 col-md-2">
+                        <select id="timeRange" name="timeRange" data-for="searchDate" class="form-control">
+                            <option value="" selected="">请选择</option>
+                            <option value="a-week">一周内</option>
+                            <option value="a-month">一个月内</option>
+                            <option value="three-month">三个月内</option>
+                            <option value="six-month">六个月内</option>
+                            <option value="a-year">一年内</option>
+                            <option value="three-year">三年内</option>
+                        </select>
+                    </div>
+                    <div class="col-xs-2 col-md-2">
+                        <input class="disable" id="searchDateBegin" name="searchDateBegin" placeholder="选择开始日期" />
+                    </div>
+                    <div class="col-xs-2 col-md-2">
+                        <input class="disable" id="searchDateEnd" name="searchDateEnd" placeholder="选择结束日期" onfocus="" class="form-control"/>
+                    </div>
+                </div>
+                <!-- 搜索条件 第二行-->
+                <div class="row split">
+                    <div class="col-xs-2 col-md-2" style="margin-top:10px;padding-right:0px;text-align:right;">
+                        <label>结果状态：</label>
+                    </div>
+                    <div class="col-xs-2 col-md-2">
+                        <select id="taskStatusText" class="form-control">
+                            <option value="" selected="">全部</option>
+                            <option value="4">已发布</option>
+                            <option value="-1">待发布</option>
+                            <option value="5">已终止</option>
+                        </select>
+                    </div>
+                    <div class="col-xs-2 col-md-2">
+                        <select id="resultStatusText" class="form-control">
+                            <option value="" selected="">全部</option>
+                        </select>
+                    </div>
+                    <div class="col-xs-2 col-md-2" style="margin-top:10px;padding-right:0px;text-align:right;">
+                        <label>>打印情况：</label>
+                    </div>
+                    <div class="col-xs-2 col-md-2">
+                        <select id="print" class="form-control">
+                            <option value="" selected="">全部</option>
+                            <option value="1">已打印</option>
+                            <option value="0">未打印</option>
+                        </select>
+                    </div>
+                </div>
+                <!-- 高级搜索 -->
+                <div class="row">
+                    <div class="searchTerm">
+                        <a title="高级搜索" style="text-decoration: none;" href="javascript:void(0);" id="switchMoreCondition">
+                            <span class="glyphicon-chevron-right" aria-hidden="true"></span>
+                            &nbsp;高级搜索
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row h-center copyright">
+            <div class="col-xs-12 col-md-12">
+                <a href="http://www.kingmed.com.cn/index.aspx" target="_blank">金域官网</a>
+                |
+                <a href="http://www.kingmed.com.cn/joins/index.aspx?NodeCode=105022002" target="_blank">法律声明</a>
+                |
+                <a href="http://www.kingmed.com.cn/joins/index.aspx?NodeCode=105022003" target="_blank">联系我们</a>
+                &nbsp;&nbsp;&nbsp;&nbsp; 版权所有© 金域检验 2013-2016。保留一切权利。粤ICP备05086624号-1
+            </div>
+        </div>
+    </div>
+</body>
+</html>

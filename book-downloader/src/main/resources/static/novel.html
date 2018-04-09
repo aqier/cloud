@@ -1,0 +1,60 @@
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
+<title>Aqier-Novel search</title>
+<script type="text/javascript">
+function read(id) {
+	Aqier.loadPage("chapter.html?serialNumber=1&id=" + id);
+}
+function catalog(id) {
+	Aqier.loadPage("catalog.html?id=" + id);
+}
+function getQueryParams(params) {
+	params.rows[0].name = $(".search").val();
+	return params;
+}
+$(function() {
+	$('.table').bootstrapTable({
+		url : './novel/query',         //请求后台的URL（*）
+		search : false,
+		showRefresh : false,
+		showToggle : false,
+        columns : [
+        	{
+                field: 'name',
+                title: '{[i18n.novel.name]}'
+            }, {
+                field: 'author',
+                title: '{[i18n.novel.author]}'
+            }, {
+                field: 'chapterNumber',
+                title: '{[i18n.novel.chapterNumber]}'
+	        }, {
+                field: 'id',
+                title: '{[i18n.novel.operation]}',
+                formatter: function(value, row, index) {
+                	return '<button type="button" class="btn btn-primary" onclick="read(\''+value+'\')">{[i18n.novel.read]}</button>'
+                	     + '<button type="button" class="btn btn-primary" onclick="catalog(\''+value+'\')">{[i18n.novel.catalog]}</button>';
+                }
+	        }
+        ]
+    });
+});
+</script>
+<div class="container">
+  <div class="table-area">  
+    <!-- 搜索区 -->
+	<div class="row split-around search-area">
+	    <div class="col-md-6 col-md-6 col-md-offset-3">
+	        <input id="search" name="search" class="form-control search" type="text" data-fn="enter2search-btn"/>
+	        <button id="search-btn" type="button" class="btn btn-primary search-btn">{[Aqier.i18n('index.search')]}</button>
+	    </div>
+	</div>
+	
+	<!-- 表格 -->
+	<div class="row">
+	    <div class="col-md-6 col-md-offset-3">
+	        <table id="result" class="table">
+	        </table>
+	    </div>
+	</div>
+  </div>	
+</div>
