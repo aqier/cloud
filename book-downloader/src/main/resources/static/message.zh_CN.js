@@ -14,7 +14,8 @@ Aqier.putLocal("zh_CN", { // 国际化
     	chapterNumber : "章节数",
     	operation : "操作",
     	read : "阅读",
-    	catalog : "目录"
+    	catalog : "目录",
+    	download : "下载"
     },
     catalog : {
     	title : "章节名称",

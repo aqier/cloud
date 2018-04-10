@@ -142,6 +142,9 @@ public class NovelDownloadController {
 		}
 		PageHelper.startPage(page.getPageNo(), page.getPageSize());
 		List<Novel> result = novelMapper.selectByExample(example);
+		if(!CommonUtil.isBlank(param.getName()) && result.isEmpty()) {
+			sync(param.getName(), false);
+		}
 		return convertToPage(result);
 	}
 	
@@ -164,14 +167,22 @@ public class NovelDownloadController {
 	}
 
 	@GetMapping("/download")
-	public void download(String novelName, HttpServletResponse response) throws IOException {
+	public void download(String novelName, String id, HttpServletResponse response) throws IOException {
 		NovelExample novelExample = new NovelExample();
 		NovelExample.Criteria c1 = novelExample.createCriteria();
 		c1.andDeletedFlagEqualTo(YesOrNo.no.toString());
-		c1.andNameEqualTo(novelName);
+		String msg = "";
+		if(!CommonUtil.isBlank(novelName)) {
+			c1.andNameEqualTo(novelName);
+			msg += "书籍名称:[" + novelName + "] ";
+		}
+		if(!CommonUtil.isBlank(id)) {
+			c1.andIdEqualTo(id);
+			msg += "书籍ID:[" + id + "] ";
+		}
 		List<Novel> novels = novelMapper.selectByExample(novelExample);
 		if(novels.isEmpty()) {
-			response.getWriter().print("小说没有同步, 或无法找到:" + novelName);
+			response.getWriter().print("小说没有同步, 或无法找到, " + msg);
 			return;
 		}
 		Novel novel = novels.get(0);
@@ -181,10 +192,10 @@ public class NovelDownloadController {
 		c2.andDeletedFlagEqualTo(YesOrNo.no.toString());
 		List<Chapter> chapters = chapterMapper.selectByExampleWithBLOBs(chapterExample);
 		if(chapters.isEmpty()) {
-			response.getWriter().print("小说没有同步:" + novelName);
+			response.getWriter().print("小说没有同步, " + msg);
 			return;
 		}
-		CommonUtil.setResponseFileHeader(response, novelName+"_" + novel.getAuthor()+".txt");
+		CommonUtil.setResponseFileHeader(response, novel.getName()+"_" + novel.getAuthor()+".txt");
 		ServletOutputStream os = response.getOutputStream();
 		for (Chapter chapter : chapters) {
 			if(chapter.getContent() != null) {

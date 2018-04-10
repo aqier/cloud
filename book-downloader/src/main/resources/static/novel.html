@@ -7,6 +7,9 @@ function read(id) {
 function catalog(id) {
 	Aqier.loadPage("catalog.html?id=" + id);
 }
+function download(id) {
+	window.open("./novel/download?id=" + id);
+}
 function getQueryParams(params) {
 	params.rows[0].name = $(".search").val();
 	return params;
@@ -32,7 +35,8 @@ $(function() {
                 title: '{[i18n.novel.operation]}',
                 formatter: function(value, row, index) {
                 	return '<button type="button" class="btn btn-primary" onclick="read(\''+value+'\')">{[i18n.novel.read]}</button>'
-                	     + '<button type="button" class="btn btn-primary" onclick="catalog(\''+value+'\')">{[i18n.novel.catalog]}</button>';
+                	     + '<button type="button" class="btn btn-primary" onclick="catalog(\''+value+'\')">{[i18n.novel.catalog]}</button>'
+                	     + '<button type="button" class="btn btn-primary" onclick="download(\''+value+'\')">{[i18n.novel.download]}</button>';
                 }
 	        }
         ]
