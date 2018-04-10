@@ -3,7 +3,7 @@
 # Package Files #
 *.war
 *.ear
-
+# jar is allow
 # ignore Maven generated target folders
 target
 
