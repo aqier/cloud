@@ -10,6 +10,15 @@ function getQueryParams(params) {
 function read(serialNumber) {
 	Aqier.loadPage("chapter.html?serialNumber="+serialNumber+"&id="+Aqier.getUrlParam("id"));
 }
+function home() {
+	Aqier.loadPage("novel.html");
+}
+$(function() {
+	Aqier.postJSON("./novel/query", {rows:[{id:Aqier.getUrlParam("id")}]}, function(data) {
+		var novel = data.rows[0];
+		$(document).attr('title', novel.author+"_"+novel.name);
+	});
+});
 $(".table").bootstrapTable({
 	url: "./novel/getChapters",
     columns: [
@@ -26,4 +35,14 @@ $(".table").bootstrapTable({
     ]
 });
 </script>
+<div class="container split">
+    <div class="row">
+        <div class="col-md-6">
+            <div id="novelName">唐家三少_斗罗大陆</div>
+        </div>
+        <div class="col-md-6">
+            <button type="button" class="btn btn-primary" onclick="home()" style="float: right;">{[i18n.chapter.homePage]}</button>
+        </div>
+    </div>
+</div>
 <table class="table"></table>

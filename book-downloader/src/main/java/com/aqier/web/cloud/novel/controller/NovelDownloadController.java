@@ -138,6 +138,9 @@ public class NovelDownloadController {
 		Criteria c = example.createCriteria();
 		c.andDeletedFlagEqualTo(YesOrNo.no.toString());
 		NovelDTO param = page.getFirstRow();
+		if(!CommonUtil.isBlank(param.getId())) {
+			c.andIdEqualTo(param.getId());
+		}
 		if(!CommonUtil.isBlank(param.getName())) {
 			c.andNameLike("%" + param.getName() + "%");
 		}
