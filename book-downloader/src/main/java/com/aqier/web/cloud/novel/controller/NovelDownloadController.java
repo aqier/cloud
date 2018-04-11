@@ -6,10 +6,12 @@
 package com.aqier.web.cloud.novel.controller;
 
 import java.io.IOException;
+import java.util.Enumeration;
 import java.util.List;
 import java.util.Set;
 
 import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +21,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.aqier.web.cloud.core.constants.Constants;
 import com.aqier.web.cloud.core.constants.YesOrNo;
 import com.aqier.web.cloud.core.dto.Page;
+import com.aqier.web.cloud.core.utils.ChineseNumberUtil;
 import com.aqier.web.cloud.core.utils.CommonUtil;
 import com.aqier.web.cloud.novel.dao.mapper.ChapterMapper;
 import com.aqier.web.cloud.novel.dao.mapper.NovelMapper;
@@ -167,7 +171,12 @@ public class NovelDownloadController {
 	}
 
 	@GetMapping("/download")
-	public void download(String novelName, String id, HttpServletResponse response) throws IOException {
+	public void download(String novelName, String id, HttpServletRequest request, HttpServletResponse response) throws IOException {
+		Enumeration<String> headerNames = request.getHeaderNames();
+		while(headerNames.hasMoreElements()) {
+			String headerName = headerNames.nextElement();
+			System.out.println(headerName + ":" + request.getHeader(headerName));
+		}
 		NovelExample novelExample = new NovelExample();
 		NovelExample.Criteria c1 = novelExample.createCriteria();
 		c1.andDeletedFlagEqualTo(YesOrNo.no.toString());
@@ -196,15 +205,24 @@ public class NovelDownloadController {
 			return;
 		}
 		CommonUtil.setResponseFileHeader(response, novel.getName()+"_" + novel.getAuthor()+".txt");
+		response.setContentType("application/os-stream;charset=UTF-8");
 		ServletOutputStream os = response.getOutputStream();
 		for (Chapter chapter : chapters) {
+			String title = chapter.getTitle();
+			if(title != null) {
+				if(!title.matches(".*第.+章.*")) { // 如果标题没有第N章, 这里自动添加 第N章
+					title = "第"+ChineseNumberUtil.format(chapter.getSerialNumber(), false) + "章 " + title;
+				}
+				os.write(title.getBytes(Constants.DEFAULT_CHARSET));
+				os.write(enterByte);
+			}
 			if(chapter.getContent() != null) {
-				os.write(chapter.getContent().getBytes());
+				os.write(chapter.getContent().getBytes(Constants.DEFAULT_CHARSET));
 				os.write(enterByte);
 			}
 		}
 		os.flush();
 	}
 	
-	private byte[] enterByte = "\n".getBytes();
+	private byte[] enterByte = "\n".getBytes(Constants.DEFAULT_CHARSET);
 }
