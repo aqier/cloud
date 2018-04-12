@@ -26,9 +26,12 @@
 <script src="./js/bootstrap-table-default.js"></script>
 
 <script type="text/javascript">
-if(window.location.hash == "") {
-	Aqier.loadPage("novel.html");
-}
+(function() {
+	var hash = window.location.hash;
+	if(hash == "" || hash == "/") {
+		Aqier.loadPage("novel.html");
+	}
+})();
 </script>
 </head>
 <body>
