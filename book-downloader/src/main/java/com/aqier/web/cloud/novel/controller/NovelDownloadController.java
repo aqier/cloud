@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
@@ -26,6 +27,7 @@ import com.aqier.web.cloud.core.constants.YesOrNo;
 import com.aqier.web.cloud.core.dto.Page;
 import com.aqier.web.cloud.core.utils.ChineseNumberUtil;
 import com.aqier.web.cloud.core.utils.CommonUtil;
+import com.aqier.web.cloud.novel.dao.ChapterDAO;
 import com.aqier.web.cloud.novel.dao.mapper.ChapterMapper;
 import com.aqier.web.cloud.novel.dao.mapper.NovelMapper;
 import com.aqier.web.cloud.novel.dto.NovelDTO;
@@ -51,6 +53,9 @@ public class NovelDownloadController {
 	
 	@Autowired
 	private NovelMapper novelMapper;
+	
+	@Autowired
+	private ChapterDAO chapterDAO;
 	
 	@Autowired
 	private ChapterMapper chapterMapper;
@@ -149,6 +154,8 @@ public class NovelDownloadController {
 		}
 		PageHelper.startPage(page.getPageNo(), page.getPageSize());
 		List<Novel> result = novelMapper.selectByExample(example);
+		List<String> novelIds = result.stream().map(Novel::getId).collect(Collectors.toList());
+		List<NovelDTO> countList = chapterDAO.countChapter(novelIds);
 		if(!CommonUtil.isBlank(param.getName()) && result.isEmpty()) {
 			sync(param.getName(), false);
 		}

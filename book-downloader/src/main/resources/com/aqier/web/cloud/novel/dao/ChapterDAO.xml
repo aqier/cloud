@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aqier.web.cloud.novel.dao.ChapterDAO">
+
+  <select id="countChapter" resultType="com.aqier.web.cloud.novel.dto.NovelDTO" parameterType="java.util.List">
+    select 
+      novel_id id,
+      count(novel_id) downloadChapterNum
+    from chapter
+    where deleted_flag = 'no'
+    and novel_id in 
+    <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+      #{item}
+    </foreach>  
+    group by novel_id
+  </select>
+
+</mapper>
