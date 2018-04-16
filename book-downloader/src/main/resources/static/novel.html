@@ -10,6 +10,17 @@ function catalog(id) {
 function download(id) {
 	window.location.href = ("./novel/download?id=" + id);
 }
+function sync(name) {
+	Aqier.getJSON("./novel/sync?novelName="+name+"&update=true", null, function(data) {
+		if(data == null) {
+			alert("无法找到书籍:" + name);
+		}else if(data.chapterNumber == data.downloadChapterNum) {
+			alert("所有章节已经同步完毕, 无需再同步");
+		}else {
+			alert("正在同步...");
+		}
+	});
+}
 function getQueryParams(params) {
 	params.rows[0].name = $(".search").val();
 	return params;
@@ -31,12 +42,16 @@ $(function() {
                 field: 'chapterNumber',
                 title: '{[i18n.novel.chapterNumber]}'
 	        }, {
+                field: 'downloadChapterNum',
+                title: '{[i18n.novel.downloadChapterNum]}'
+	        }, {
                 field: 'id',
                 title: '{[i18n.novel.operation]}',
                 formatter: function(value, row, index) {
                 	return '<button type="button" class="btn btn-primary" onclick="read(\''+value+'\')">{[i18n.novel.read]}</button>'
-                	     + '<button type="button" class="btn btn-primary" onclick="catalog(\''+value+'\')">{[i18n.novel.catalog]}</button>'
-                	     + '<button type="button" class="btn btn-primary" onclick="download(\''+value+'\')">{[i18n.novel.download]}</button>';
+                	     + '<button type="button" class="btn btn-primary" onclick="catalog(\''+value+'\')">{[i18n.novel.catalog]}</button><br/>'
+                	     + '<button type="button" class="btn btn-primary" onclick="download(\''+value+'\')">{[i18n.novel.download]}</button>'
+                	     + '<button type="button" class="btn btn-primary" onclick="sync(\''+row.name+'\')">{[i18n.novel.sync]}</button>';
                 }
 	        }
         ]

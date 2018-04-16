@@ -11,11 +11,13 @@ Aqier.putLocal("zh_CN", { // 国际化
     	id : "ID",
     	name : "名称",
     	author : "作者",
-    	chapterNumber : "章节数",
+    	chapterNumber : "章节总数",
+    	downloadChapterNum : "已同步章节数",
     	operation : "操作",
     	read : "阅读",
     	catalog : "目录",
-    	download : "下载"
+    	download : "下载",
+    	sync : "同步"
     },
     catalog : {
     	title : "章节名称",

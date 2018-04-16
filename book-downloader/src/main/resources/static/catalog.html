@@ -17,6 +17,7 @@ $(function() {
 	Aqier.postJSON("./novel/query", {rows:[{id:Aqier.getUrlParam("id")}]}, function(data) {
 		var novel = data.rows[0];
 		$(document).attr('title', novel.author+"_"+novel.name);
+		$("#novelName").text(novel.author+"_"+novel.name);
 	});
 });
 $(".table").bootstrapTable({
@@ -38,7 +39,7 @@ $(".table").bootstrapTable({
 <div class="container split">
     <div class="row">
         <div class="col-md-6">
-            <div id="novelName">唐家三少_斗罗大陆</div>
+            <div id="novelName"></div>
         </div>
         <div class="col-md-6">
             <button type="button" class="btn btn-primary" onclick="home()" style="float: right;">{[i18n.chapter.homePage]}</button>

@@ -6,8 +6,10 @@
 package com.aqier.web.cloud.novel.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -15,6 +17,7 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -94,7 +97,7 @@ public class NovelDownloadController {
 		}
 		PageHelper.startPage(page.getPageNo(), page.getPageSize());
 		List<Chapter> chapters = chapterMapper.selectByExample(example);
-		return convertToPage(chapters);
+		return convertToPage(chapters, null);
 	}
 	
 	@GetMapping("/search")
@@ -130,7 +133,7 @@ public class NovelDownloadController {
 		return null;
 	}
 	
-	@GetMapping("/scan")
+//	@GetMapping("/scan")
 	public void scan() {
 		for(INovelDownloader novelDownloader : novelDownloaders) {
 			novelDownloader.scan();
@@ -138,7 +141,7 @@ public class NovelDownloadController {
 	}
 	
 	@PostMapping("/query")
-	public Page<Novel> queryNovel(@RequestBody Page<NovelDTO> page) {
+	public Page<NovelDTO> queryNovel(@RequestBody Page<NovelDTO> page) {
 		NovelExample example = new NovelExample();
 		Criteria c = example.createCriteria();
 		c.andDeletedFlagEqualTo(YesOrNo.no.toString());
@@ -154,12 +157,25 @@ public class NovelDownloadController {
 		}
 		PageHelper.startPage(page.getPageNo(), page.getPageSize());
 		List<Novel> result = novelMapper.selectByExample(example);
-		List<String> novelIds = result.stream().map(Novel::getId).collect(Collectors.toList());
-		List<NovelDTO> countList = chapterDAO.countChapter(novelIds);
+		
+		Page<NovelDTO> pageDatas = convertToPage(result, NovelDTO.class);
+		if(!result.isEmpty()) {
+			List<String> novelIds = result.stream().map(Novel::getId).collect(Collectors.toList());
+			List<NovelDTO> countList = chapterDAO.countChapter(novelIds);
+			Map<String, List<NovelDTO>> countsMap = countList.stream().collect(Collectors.groupingBy(NovelDTO::getId));
+			for (NovelDTO novelDTO : pageDatas.getRows()) {
+				List<NovelDTO> nd = countsMap.get(novelDTO.getId());
+				if(nd != null) {
+					novelDTO.setDownloadChapterNum(nd.get(0).getDownloadChapterNum());
+				}else {
+					novelDTO.setDownloadChapterNum(0);
+				}
+			}
+		}
 		if(!CommonUtil.isBlank(param.getName()) && result.isEmpty()) {
 			sync(param.getName(), false);
 		}
-		return convertToPage(result);
+		return pageDatas;
 	}
 	
 	/**
@@ -168,9 +184,25 @@ public class NovelDownloadController {
 	 * @author yulong.wang@aqier.com
 	 * @since 2018年3月29日
 	 */
-	private <T> Page<T> convertToPage(List<T> list) {
-		Page<T> page = new Page<>();
-		page.setRows(list);
+	private <T, R> Page<R> convertToPage(List<T> list, Class<R> clazz) {
+		Page<R> page = new Page<>();
+		if(list != null && !list.isEmpty()) {
+			try {
+				if(clazz != null && !list.get(0).getClass().equals(clazz)) {
+					List<R> rows = new ArrayList<>();
+					for (T t : list) {
+						R r = clazz.newInstance();
+						BeanUtils.copyProperties(t, r);
+						rows.add(r);
+					}
+					page.setRows(rows);
+				}else {
+					page.setRows(CommonUtil.caseObject(list));
+				}
+			} catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		}
 		if(list instanceof com.github.pagehelper.Page) {
 			com.github.pagehelper.Page<T> pageResult = CommonUtil.caseObject(list);
 			page.setTotal((int)pageResult.getTotal());
@@ -179,7 +211,7 @@ public class NovelDownloadController {
 		}
 		return page;
 	}
-
+	
 	@GetMapping("/download")
 	public void download(String novelName, String id, HttpServletRequest request, HttpServletResponse response) throws IOException {
 		Enumeration<String> headerNames = request.getHeaderNames();
