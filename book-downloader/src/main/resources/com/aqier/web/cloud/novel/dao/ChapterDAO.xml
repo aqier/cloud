@@ -11,7 +11,7 @@
     and novel_id in 
     <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
       #{item}
-    </foreach>  
+    </foreach>
     group by novel_id
   </select>
 

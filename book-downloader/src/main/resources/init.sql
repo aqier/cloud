@@ -1,5 +1,21 @@
 select * from novel where rownum = 1;
 
+create table behavioral_statistics (
+    id varchar(32) primary key,
+    
+    source varchar(16) not null, /*请求来源*/
+    target varchar(256) not null, /*请求目标*/
+    data varchar(4000), /*请求数据*/
+    use_time number(8) not null, /*处理请求耗时(毫秒)*/
+    
+    deleted_flag varchar(4) not null default 'no',
+    version_number bigint not null default 0,
+    create_by varchar(32) not null,
+    create_date datetime not null,
+    last_update_by varchar(32) not null,
+    last_update_date datetime not null
+);
+
 create table novel(
     id varchar(32) primary key,
     

@@ -21,6 +21,7 @@ import com.aqier.web.cloud.core.config.H2DatabaseServerStarter;
 import com.aqier.web.cloud.core.config.MyBatisSessionFactoryConfig;
 import com.aqier.web.cloud.core.service.DatabaseInitService;
 import com.aqier.web.cloud.novel.filter.LimitFilter;
+import com.aqier.web.cloud.novel.service.IBehavioralStatisticsService;
 
 /**
  * 小说下载程序
@@ -67,10 +68,10 @@ public class BookDownloaderApplication {
 		return databaseInitService;
 	}
 	
-//	@Bean
-	public FilterRegistrationBean limitFilter() {
+	@Bean
+	public FilterRegistrationBean limitFilter(IBehavioralStatisticsService behavioralStatisticsService) {
 		FilterRegistrationBean filter = new FilterRegistrationBean();
-		filter.setFilter(new LimitFilter());
+		filter.setFilter(new LimitFilter(behavioralStatisticsService));
 		filter.addUrlPatterns("/*");
 		return filter;
 	}
