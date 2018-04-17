@@ -38,7 +38,7 @@ public class LimitFilter implements Filter {
 	
 	private static final Log log = LogFactory.getLog(LimitFilter.class);
 	
-	private IBehavioralStatisticsService behavioralStatisticsService;
+	protected IBehavioralStatisticsService behavioralStatisticsService;
 	
 	
 	public LimitFilter(IBehavioralStatisticsService behavioralStatisticsService) {
@@ -62,7 +62,7 @@ public class LimitFilter implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
 		
-		long start = System.currentTimeMillis();
+//		long start = System.currentTimeMillis();
 		// 转换
 		HttpServletRequest req = (HttpServletRequest)request;
 		String requestURI = req.getRequestURI();
@@ -95,8 +95,8 @@ public class LimitFilter implements Filter {
 //			log.info("Request data ["+requestURI+"], remote address:" + req.getRemoteAddr());
 //		}
 		chain.doFilter(request, response);
-		long useTime = System.currentTimeMillis() - start;
-		behavioralStatisticsService.insert(ip, requestURI, params, useTime);
+//		long useTime = System.currentTimeMillis() - start;
+		//behavioralStatisticsService.insert(ip, requestURI, params, useTime);
 	}
 
 	/* 

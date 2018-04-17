@@ -52,7 +52,7 @@ public class BookDownloaderApplication {
 	public H2DatabaseServerStarter h2Database(Environment environment) {
 		return new H2DatabaseServerStarter(environment);
 	}
-
+	
 	/**
 	 * 启动时自动初始化数据库
 	 * 
@@ -72,7 +72,7 @@ public class BookDownloaderApplication {
 	public FilterRegistrationBean limitFilter(IBehavioralStatisticsService behavioralStatisticsService) {
 		FilterRegistrationBean filter = new FilterRegistrationBean();
 		filter.setFilter(new LimitFilter(behavioralStatisticsService));
-		filter.addUrlPatterns("/*");
+		filter.addUrlPatterns("/123456");
 		return filter;
 	}
 	
