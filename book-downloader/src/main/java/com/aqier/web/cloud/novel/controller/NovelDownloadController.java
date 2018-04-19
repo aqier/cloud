@@ -202,6 +202,8 @@ public class NovelDownloadController {
 			} catch (Exception e) {
 				throw new RuntimeException(e);
 			}
+		}else {
+			page.setRows(CommonUtil.caseObject(list));
 		}
 		if(list instanceof com.github.pagehelper.Page) {
 			com.github.pagehelper.Page<T> pageResult = CommonUtil.caseObject(list);
