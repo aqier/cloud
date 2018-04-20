@@ -16,6 +16,8 @@ create table behavioral_statistics (
     last_update_date datetime not null
 );
 
+comment on table behavioral_statistics is '资源访问纪录';
+
 comment on column behavioral_statistics.id is 'ID';
 
 comment on column behavioral_statistics.source is '来源';
