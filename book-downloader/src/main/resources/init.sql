@@ -16,6 +16,21 @@ create table behavioral_statistics (
     last_update_date datetime not null
 );
 
+comment on column behavioral_statistics.id is 'ID';
+
+comment on column behavioral_statistics.source is '来源';
+comment on column behavioral_statistics.target is '目标';
+comment on column behavioral_statistics.data is '数据';
+comment on column behavioral_statistics.use_time is '耗时(毫秒)';
+
+comment on column behavioral_statistics.deleted_flag is '是否删除';
+comment on column behavioral_statistics.version_number is '版本号';
+comment on column behavioral_statistics.create_by is '创建人';
+comment on column behavioral_statistics.create_date is '创建时间';
+comment on column behavioral_statistics.last_update_by is '更新人';
+comment on column behavioral_statistics.last_update_date is '更新时间';
+
+
 create table novel(
     id varchar(32) primary key,
     
