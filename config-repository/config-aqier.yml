@@ -1,6 +1,6 @@
 security:
     basic:
-      enable: ${security.enable:false}
+      enable: ${security.enable:true}
     user:
       name: '{cipher}4ca754ebea60484e9e1a5a480a7c7f68382e4a463d03a35b968f88335a5f33e2'
       password: '{cipher}78c8e4d3e081f1c395b2bff6c64b4366ad8b1dfaef67dfa04161f8546bd654160b18f8dfab574068d4b89004610adc78'
@@ -17,7 +17,7 @@ server:
   tomcat: 
     maxThreads: 5
   ssl: #启用HTTPS
-    enabled: true
+    enabled: ${ssl.enable:false}
     keyStore: ${protocol.config:https}://${security.user.name}:${security.user.password}@${domain.config}:${config.port:8888}/getCert
     keyStorePassword: '{cipher}e804f4acd981cdc39a85a64abdd05a0a86058b74779f346c4696d891b75eaeddfe00f1b95b0485d574525fcfd61b745c85e476a22ae438528fd2a020350508a6'
     keyStoreType: PKCS12
