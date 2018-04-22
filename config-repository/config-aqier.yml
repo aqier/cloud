@@ -18,7 +18,7 @@ server:
     maxThreads: 5
   ssl: #启用HTTPS
     enabled: ${ssl.enable:false}
-    keyStore: ${protocol.config:https}://${security.user.name}:${security.user.password}@${domain.config}:${config.port:8888}/getCert
+    keyStore: ${protocol.config:http}://${security.user.name}:${security.user.password}@${domain.config}:${config.port:8888}/getCert
     keyStorePassword: '{cipher}e804f4acd981cdc39a85a64abdd05a0a86058b74779f346c4696d891b75eaeddfe00f1b95b0485d574525fcfd61b745c85e476a22ae438528fd2a020350508a6'
     keyStoreType: PKCS12
     #keyAlias: aqier
@@ -38,7 +38,7 @@ eureka:
       securePort: ${server.port}
   client:
     serviceUrl:
-      defaultZone: ${protocol.eureka:https}://${security.user.name}:${security.user.password}@${domain.eureka}:${port.eureka:8889}/eureka/
+      defaultZone: ${protocol.eureka:http}://${security.user.name}:${security.user.password}@${domain.eureka}:${port.eureka:8889}/eureka/
     registerWithEureka: true #实例是否在eureka服务器上注册自己的信息以供其他服务发现，默认为true, 这里没有配置eureka地址, 不能启用
     fetchRegistry: true #此客户端是否获取eureka服务器注册表上的注册信息，默认为true
 
