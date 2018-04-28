@@ -156,6 +156,9 @@ public class NovelDownloadController {
 			c.andAuthorLike("%" + param.getAuthor() + "%");
 		}
 		PageHelper.startPage(page.getPageNo(), page.getPageSize());
+		if(!CommonUtil.isBlank(page.getOrderBy())) {
+			example.setOrderByClause(page.getOrderBy());
+		}
 		List<Novel> result = novelMapper.selectByExample(example);
 		
 		Page<NovelDTO> pageDatas = convertToPage(result, NovelDTO.class);
