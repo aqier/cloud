@@ -1,10 +1,12 @@
-package com.aqier.web.cloud.novel.service.impl;
+package com.aqier.web.cloud.novel.test;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
+
+import com.aqier.web.cloud.novel.service.impl.NovelDownloader;
 
 public class HuaweiClub extends NovelDownloader {
 

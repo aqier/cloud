@@ -95,9 +95,9 @@
 			<artifactId>h2</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>aqier</groupId>
-			<artifactId>core</artifactId>
-			<version>1.0</version>
+			<groupId>com.aqier.cloud</groupId>
+			<artifactId>aqier-cloud-core</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 		<!-- Spring Boot 测试 -->
 		<dependency>
@@ -105,12 +105,6 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 		</dependency>
 	</dependencies>
-	<repositories>
-		<repository>
-			<id>localRepository</id>
-			<url>file://${basedir}/src/main/resources/libs</url>
-		</repository>
-	</repositories>
 	<build>
 		<plugins>
 			<plugin>
