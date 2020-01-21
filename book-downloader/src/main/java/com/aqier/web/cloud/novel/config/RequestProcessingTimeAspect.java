@@ -15,7 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.aqier.web.cloud.novel.service.IBehavioralStatisticsService;
-import com.aqier.web.cloud.novel.util.RemoteAddressUtil;
+import com.aqier.web.cloud.novel.util.ClientIpUtil;
 
 /**
  * 请求处理时间AOP处理器
@@ -39,7 +39,7 @@ public class RequestProcessingTimeAspect {
 	public Object around(ProceedingJoinPoint joinPoint) throws Throwable {
 		long start = System.currentTimeMillis();
 		Object[] arguments = joinPoint.getArgs();
-		String source = RemoteAddressUtil.getRemoteHost(request);
+		String source = ClientIpUtil.getClientIp(request);
 		String target = request.getRequestURI();
 		try {
 			Object returnValue = joinPoint.proceed(arguments);

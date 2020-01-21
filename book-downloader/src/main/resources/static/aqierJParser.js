@@ -227,7 +227,7 @@ JParser.prototype = {
         }
         return value || key;
     },
-    loadPage(hash, params) {
+    loadPage : function(hash, params) {
     	window.location.hash = hash;
     },
     loadResource : function(types) {

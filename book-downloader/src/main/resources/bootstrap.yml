@@ -1,5 +1,5 @@
 server:
-  port: ${port.novel:8893}
+  port: ${port.novel:8894}
 
 spring:
   application:

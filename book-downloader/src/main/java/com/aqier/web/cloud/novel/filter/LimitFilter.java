@@ -22,7 +22,7 @@ import org.apache.commons.logging.LogFactory;
 
 import com.aqier.web.cloud.core.utils.CommonUtil;
 import com.aqier.web.cloud.novel.service.IBehavioralStatisticsService;
-import com.aqier.web.cloud.novel.util.RemoteAddressUtil;
+import com.aqier.web.cloud.novel.util.ClientIpUtil;
 
 /**
  * 
@@ -66,7 +66,7 @@ public class LimitFilter implements Filter {
 		// 转换
 		HttpServletRequest req = (HttpServletRequest)request;
 		String requestURI = req.getRequestURI();
-		String ip = RemoteAddressUtil.getRemoteHost(req);
+		String ip = ClientIpUtil.getClientIp(req);
 		Object params = null;
 		if(!req.getParameterMap().isEmpty()) {
 			params = req.getParameterMap();

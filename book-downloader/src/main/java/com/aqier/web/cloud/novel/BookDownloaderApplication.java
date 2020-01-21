@@ -5,6 +5,8 @@
  */
 package com.aqier.web.cloud.novel;
 
+import java.util.Date;
+
 import javax.sql.DataSource;
 
 import org.springframework.boot.SpringApplication;
@@ -16,6 +18,8 @@ import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.env.Environment;
 import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import com.aqier.web.cloud.core.config.H2DatabaseServerStarter;
 import com.aqier.web.cloud.core.config.MyBatisSessionFactoryConfig;
@@ -29,6 +33,7 @@ import com.aqier.web.cloud.novel.service.IBehavioralStatisticsService;
  * @author yulong.wang@Aqier.com
  * @since 2018年3月16日
  */
+@Controller
 @EnableAsync
 @SpringBootApplication
 @EnableAutoConfiguration
@@ -38,7 +43,12 @@ public class BookDownloaderApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(BookDownloaderApplication.class, args);
 	}
-
+	
+	@GetMapping("/")
+	public String homePage() {
+		return "index.html?" + new Date().getTime();
+	}
+	
 	/**
 	 * 启动H2 database 数据库
 	 * 
