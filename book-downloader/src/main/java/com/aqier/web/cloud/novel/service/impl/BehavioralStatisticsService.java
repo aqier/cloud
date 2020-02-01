@@ -35,7 +35,8 @@ public class BehavioralStatisticsService implements IBehavioralStatisticsService
 	
 	private Log log = LogFactory.getLog(BehavioralStatisticsService.class);
 	
-	public BehavioralStatisticsService() {
+	@SuppressWarnings("deprecation")
+    public BehavioralStatisticsService() {
 		objectMapper.configure(SerializationFeature.WRITE_NULL_MAP_VALUES, false);
 		objectMapper.setSerializationInclusion(Include.NON_NULL);
 	}

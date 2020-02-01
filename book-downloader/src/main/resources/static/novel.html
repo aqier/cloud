@@ -1,14 +1,6 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
 <title>Aqier-Novel search</title>
 <script type="text/javascript">
-$(function() {
-	if(typeof plug != 'undefined') {
-		var device_id = plus.device.uuid.valueOf();
-		alert(device_id);
-	}else {
-		alert(new Fingerprint({canvas: true}).get());
-	}
-});
 function read(id) {
 	Aqier.loadPage("chapter.html?serialNumber=1&id=" + id);
 }

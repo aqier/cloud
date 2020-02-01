@@ -2,7 +2,7 @@
  * Object 克隆方法
  * @returns {Object}
  */
-Object.prototype.Clone = function(){
+Object.prototype.clone = function(){
     var objClone;
     if (this.constructor == Object){
         objClone = new this.constructor(); 
@@ -12,7 +12,7 @@ Object.prototype.Clone = function(){
     for(var key in this){
         if (objClone[key] != this[key] ) {
             if ( typeof(this[key]) == 'object' ) {
-                objClone[key] = this[key].Clone();
+                objClone[key] = this[key].clone();
             }else{
                 objClone[key] = this[key];
             }

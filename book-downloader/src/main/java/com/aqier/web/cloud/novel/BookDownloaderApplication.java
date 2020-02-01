@@ -1,12 +1,15 @@
 /*
  * Domain Aqier.com Reserve Copyright
+ * 
  * @author yuloang.wang@Aqier.com
+ * 
  * @since 2017年8月24日
  */
 package com.aqier.web.cloud.novel;
 
 import java.util.Date;
 
+import javax.servlet.Filter;
 import javax.sql.DataSource;
 
 import org.springframework.boot.SpringApplication;
@@ -37,53 +40,53 @@ import com.aqier.web.cloud.novel.service.IBehavioralStatisticsService;
 @EnableAsync
 @SpringBootApplication
 @EnableAutoConfiguration
-@ImportAutoConfiguration(classes = {MyBatisSessionFactoryConfig.class})
+@ImportAutoConfiguration(classes = { MyBatisSessionFactoryConfig.class })
 public class BookDownloaderApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(BookDownloaderApplication.class, args);
-	}
-	
-	@GetMapping("/")
-	public String homePage() {
-		return "index.html?" + new Date().getTime();
-	}
-	
-	/**
-	 * 启动H2 database 数据库
-	 * 
-	 * @param environment
-	 * @return
-	 * @author yulong.wang@Aqier.com
-	 * @since 2017年12月21日
-	 */
-	@Bean // 只有在 连接池配置为 H2 数据库是才启动
-	@ConditionalOnProperty(name = "spring.datasource.driverClassName", havingValue = "org.h2.Driver")
-	public H2DatabaseServerStarter h2Database(Environment environment) {
-		return new H2DatabaseServerStarter(environment);
-	}
-	
-	/**
-	 * 启动时自动初始化数据库
-	 * 
-	 * @param dataSource
-	 * @return
-	 * @author yulong.wang@Aqier.com
-	 * @since 2018年3月27日
-	 */
-	@Bean
-	public DatabaseInitService autoInitDatabase(DataSource dataSource) {
-		DatabaseInitService databaseInitService = new DatabaseInitService(dataSource);
-		databaseInitService.initDatabase("init.sql");
-		return databaseInitService;
-	}
-	
-	@Bean
-	public FilterRegistrationBean limitFilter(IBehavioralStatisticsService behavioralStatisticsService) {
-		FilterRegistrationBean filter = new FilterRegistrationBean();
-		filter.setFilter(new LimitFilter(behavioralStatisticsService));
-		filter.addUrlPatterns("/123456");
-		return filter;
-	}
-	
+    public static void main(String[] args) {
+        SpringApplication.run(BookDownloaderApplication.class, args);
+    }
+
+    @GetMapping("/")
+    public String homePage() {
+        return "index.html?" + new Date().getTime();
+    }
+
+    /**
+     * 启动H2 database 数据库
+     * 
+     * @param environment
+     * @return
+     * @author yulong.wang@Aqier.com
+     * @since 2017年12月21日
+     */
+    @Bean // 只有在 连接池配置为 H2 数据库是才启动
+    @ConditionalOnProperty(name = "spring.datasource.driverClassName", havingValue = "org.h2.Driver")
+    public H2DatabaseServerStarter h2Database(Environment environment) {
+        return new H2DatabaseServerStarter(environment);
+    }
+
+    /**
+     * 启动时自动初始化数据库
+     * 
+     * @param dataSource
+     * @return
+     * @author yulong.wang@Aqier.com
+     * @since 2018年3月27日
+     */
+    @Bean
+    public DatabaseInitService autoInitDatabase(DataSource dataSource) {
+        DatabaseInitService databaseInitService = new DatabaseInitService(dataSource);
+        databaseInitService.initDatabase("init.sql");
+        return databaseInitService;
+    }
+
+    @Bean
+    public FilterRegistrationBean<Filter> limitFilter(IBehavioralStatisticsService behavioralStatisticsService) {
+        FilterRegistrationBean<Filter> filter = new FilterRegistrationBean<>();
+        filter.setFilter(new LimitFilter(behavioralStatisticsService));
+        filter.addUrlPatterns("/123456");
+        return filter;
+    }
+
 }
