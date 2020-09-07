@@ -10,6 +10,8 @@ package com.aqier.web.cloud.novel.controller;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Map;
@@ -107,36 +109,45 @@ public class NovelDownloadController {
     }
 
     @GetMapping("/search")
-    public NovelDTO search(String novelName, Boolean update) {
+    public List<NovelDTO> search(String novelName, Boolean update) {
         if (update == null) {
             update = false;
         }
         for (INovelDownloader novelDownloader : novelDownloaders) {
-            NovelDTO novel = novelDownloader.searchNovel(novelName, update);
-            if (novel != null) {
+            List<NovelDTO> novel = novelDownloader.searchNovel(novelName, update);
+            if (!novel.isEmpty()) {
                 return novel;
             }
         }
         NovelDTO notFount = new NovelDTO();
         notFount.setName("Novel [" + novelName + "] not found");
-        return notFount;
+        return Arrays.asList(notFount);
     }
 
     @GetMapping("/sync")
-    public NovelDTO sync(String novelName, Boolean update) {
+    public List<NovelDTO> sync(String novelName, Boolean update) {
         if (update == null) {
             update = false;
         }
         for (INovelDownloader novelDownloader : novelDownloaders) {
-            NovelDTO novel = novelDownloader.searchNovel(novelName, update);
-            if (novel != null) {
+            List<NovelDTO> novels = novelDownloader.searchNovel(novelName, update);
+            if (!novels.isEmpty()) {
                 new Thread(() -> {
-                    novelDownloader.searchChapter(novel);
+                    for (NovelDTO novel : novels) {
+                        String novelTag = novel.getAuthor() + "-" + novel.getName();
+                        try {
+                            System.out.println("同步小说章节：" + novelTag);
+                            novelDownloader.searchChapter(novel);
+                        } catch (Exception e) {
+                            System.err.println("同步小说章节失败：" + novelTag);
+                            e.printStackTrace();
+                        }
+                    }
                 }).start();
-                return novel;
+                return novels;
             }
         }
-        return null;
+        return Collections.emptyList();
     }
 
     @GetMapping("/scan")
@@ -166,7 +177,6 @@ public class NovelDownloadController {
             example.setOrderByClause(page.getOrderBy());
         }
         List<Novel> result = novelMapper.selectByExample(example);
-
         Page<NovelDTO> pageDatas = convertToPage(result, NovelDTO.class);
         if (!result.isEmpty()) {
             List<String> novelIds = result.stream().map(Novel::getId).collect(Collectors.toList());

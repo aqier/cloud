@@ -1,0 +1,1 @@
+su - aqier -c "nohup java -jar -Xmx192M -XX:MaxMetaspaceSize=128M -XX:MaxDirectMemorySize=32M -D39c51b9e7a64c ./book-downloader-0.0.1-SNAPSHOT.jar > ./log/book-downloader-0.0.1-SNAPSHOT.jar.log 2>&1 &"

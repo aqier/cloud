@@ -39,7 +39,7 @@ public interface INovelDownloader {
 	 */
 	void download(String novel, OutputStream os);
 
-	NovelDTO searchNovel(String novelName, boolean update);
+	List<NovelDTO> searchNovel(String novelName, boolean update);
 	
 	@Async
 	void scan();
