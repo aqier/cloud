@@ -20,7 +20,7 @@ import org.springframework.stereotype.Service;
 public class NovelDownloader4Luoxia extends NovelDownloader {
 	
 	public NovelDownloader4Luoxia() {
-		this.searchUrl = "http://www.luoxia.com/?s=";
+		this.searchUrl = "https://www.luoxia.com/?s=";
 		this.successSleepTime = 0;
 	}
 	

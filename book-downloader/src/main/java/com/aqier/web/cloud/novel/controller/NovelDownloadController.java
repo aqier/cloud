@@ -130,21 +130,25 @@ public class NovelDownloadController {
             update = false;
         }
         for (INovelDownloader novelDownloader : novelDownloaders) {
-            List<NovelDTO> novels = novelDownloader.searchNovel(novelName, update);
-            if (!novels.isEmpty()) {
-                new Thread(() -> {
-                    for (NovelDTO novel : novels) {
-                        String novelTag = novel.getAuthor() + "-" + novel.getName();
-                        try {
-                            System.out.println("同步小说章节：" + novelTag);
-                            novelDownloader.searchChapter(novel);
-                        } catch (Exception e) {
-                            System.err.println("同步小说章节失败：" + novelTag);
-                            e.printStackTrace();
+            try {
+                List<NovelDTO> novels = novelDownloader.searchNovel(novelName, update);
+                if (!novels.isEmpty()) {
+                    new Thread(() -> {
+                        for (NovelDTO novel : novels) {
+                            String novelTag = novel.getAuthor() + "-" + novel.getName();
+                            try {
+                                System.out.println("同步小说章节：" + novelTag);
+                                novelDownloader.searchChapter(novel);
+                            } catch (Exception e) {
+                                System.err.println("同步小说章节失败：" + novelTag);
+                                e.printStackTrace();
+                            }
                         }
-                    }
-                }).start();
-                return novels;
+                    }).start();
+                    return novels;
+                }
+            } catch (Exception e) {
+                System.err.println("同步失败:" + novelName + ": " + e.getMessage());
             }
         }
         return Collections.emptyList();
