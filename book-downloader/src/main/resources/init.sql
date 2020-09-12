@@ -1,4 +1,4 @@
-select * from novel where rownum = 1;
+select * from novel where rownum = 1; 
 
 create table behavioral_statistics (
     id varchar(32) primary key,
