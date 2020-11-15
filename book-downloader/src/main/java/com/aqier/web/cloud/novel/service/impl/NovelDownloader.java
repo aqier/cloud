@@ -7,6 +7,8 @@
  */
 package com.aqier.web.cloud.novel.service.impl;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -20,6 +22,7 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
+import java.util.zip.GZIPInputStream;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.BeanUtils;
@@ -351,6 +354,7 @@ public class NovelDownloader implements INovelDownloader {
         Charset charset = Constants.DEFAULT_CHARSET;
         HttpStatus hs = HttpStatus.NOT_FOUND;
         int n = 10;
+        byte[] body = null;
         while (!hs.is2xxSuccessful()) {
             if (n < 0) {
                 System.err.println("retry 10 times andcan not load page content: " + url);
@@ -364,11 +368,16 @@ public class NovelDownloader implements INovelDownloader {
                 if (encode != null) {
                     charset = encode;
                 }
+                body = r.getBody();
+                String contentEncoding = r.getHeaders().getFirst("Content-Encoding");
+                if ("gzip".equalsIgnoreCase(contentEncoding)) {
+                    body = uncompress(body);
+                }
                 try {
                     Thread.sleep(successSleepTime);
                 } catch (InterruptedException e1) {
                 }
-            } catch (RestClientException e) {
+            } catch (RestClientException | IOException e) {
                 System.err.println(url + ": " + e.getMessage());
                 try {
                     Thread.sleep(failSleepTime);
@@ -377,12 +386,27 @@ public class NovelDownloader implements INovelDownloader {
             }
             n--;
         }
-        byte[] body = r.getBody();
         if (body == null) {
             System.err.println("can not load page content: " + url);
             return "";
         }
-        return new String(body, charset);
+        String pageContent = new String(body, charset);
+        return pageContent;
+    }
+
+    public static byte[] uncompress(byte[] bytes) throws IOException {
+        if (bytes == null || bytes.length == 0) {
+            return bytes;
+        }
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        ByteArrayInputStream in = new ByteArrayInputStream(bytes);
+        GZIPInputStream ungzip = new GZIPInputStream(in);
+        byte[] buffer = new byte[1024];
+        int n;
+        while ((n = ungzip.read(buffer)) >= 0) {
+            out.write(buffer, 0, n);
+        }
+        return out.toByteArray();
     }
 
     /**

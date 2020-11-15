@@ -31,6 +31,8 @@ $(function() {
 		search : false,
 		showRefresh : false,
 		showToggle : false,
+		searchText: "输入小说全名",
+		formatNoMatches: function() {return "当前没有找到书籍, 后台正在全网搜索, 请稍后再试...";},
         columns : [
         	{
                 field: 'name',
@@ -63,7 +65,7 @@ $(function() {
     <!-- 搜索区 -->
 	<div class="row split-around search-area">
 	    <div class="col-md-6 col-md-6 col-md-offset-3">
-	        <input id="search" name="search" class="form-control search" type="text" data-fn="enter2search-btn"/>
+	        <input id="search" name="search" class="form-control search" type="text" data-fn="enter2search-btn" placeholder="输入小说全名"/>
 	        <button id="search-btn" type="button" class="btn btn-primary search-btn">{[Aqier.i18n('index.search')]}</button>
 	    </div>
 	</div>

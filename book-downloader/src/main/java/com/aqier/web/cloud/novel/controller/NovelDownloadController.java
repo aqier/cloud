@@ -22,6 +22,7 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ContentDisposition;
@@ -113,10 +114,13 @@ public class NovelDownloadController {
         if (update == null) {
             update = false;
         }
-        for (INovelDownloader novelDownloader : novelDownloaders) {
-            List<NovelDTO> novel = novelDownloader.searchNovel(novelName, update);
-            if (!novel.isEmpty()) {
-                return novel;
+        if(StringUtils.isNotBlank(novelName)) {
+            novelName = StringUtils.trimToEmpty(novelName);
+            for (INovelDownloader novelDownloader : novelDownloaders) {
+                List<NovelDTO> novel = novelDownloader.searchNovel(novelName, update);
+                if (!novel.isEmpty()) {
+                    return novel;
+                }
             }
         }
         NovelDTO notFount = new NovelDTO();
@@ -129,6 +133,7 @@ public class NovelDownloadController {
         if (update == null) {
             update = false;
         }
+        novelName = StringUtils.trimToEmpty(novelName);
         for (INovelDownloader novelDownloader : novelDownloaders) {
             try {
                 List<NovelDTO> novels = novelDownloader.searchNovel(novelName, update);

@@ -8,6 +8,7 @@
 package com.aqier.web.cloud.novel;
 
 import java.util.Date;
+import java.util.UUID;
 
 import javax.servlet.Filter;
 import javax.sql.DataSource;
@@ -44,6 +45,7 @@ import com.aqier.web.cloud.novel.service.IBehavioralStatisticsService;
 public class BookDownloaderApplication {
 
     public static void main(String[] args) {
+        System.out.println(UUID.randomUUID().toString().replace("-", ""));
         SpringApplication.run(BookDownloaderApplication.class, args);
     }
 

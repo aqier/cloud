@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>SQL Console</title>
+<style type="text/css">
+body {
+	background-color: #c7edcc;
+}
+
+div {
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+</style>
+<script type="text/javascript" src="../js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="../js/json2.min.js"></script>
+<script type="text/javascript">
+	$(function() {
+		$("#execute").click(function() {
+			$.ajax({
+				url : "./sql/execute?sql=" + $("#sql").val(),
+				method : "post",
+				contentType : "application/json",
+				data : JSON.stringify({
+					pageNo : 1,
+					pageSize : 50
+				}),
+				success : function(page) {
+					var rows = page.rows;
+					if (rows.length > 0) {
+						var tableBody = "";
+						var titles = [];
+						var rowNumKey = null;
+						for (key in rows[0]) {
+							if (key.toLowerCase() == "row_num") {
+								rowNumKey = key;
+							} else {
+								titles.push(key);
+							}
+						}
+						titles = titles.sort();
+						if (rowNumKey != null) {
+							titles.splice(0, 0, rowNumKey);
+						}
+						tableBody += "<tr>";
+						for (i in titles) {
+							tableBody += "<td>";
+							tableBody += titles[i].toLowerCase();
+							tableBody += "</td>";
+						}
+						tableBody += "</tr>";
+						var contentLenth = {};
+						var titleWidth = {};
+						var maxWidth = 0;
+						var maxWidthTitle = null;
+						for (index = 0; index < rows.length; index++) {
+							var row = rows[index];
+							
+							if(index + 1 == rows.length) {
+								var totalLen = 0;
+								for(var title in contentLenth) {
+									totalLen += contentLenth[title];
+								}
+								for(var title in contentLenth) {
+									var width = contentLenth[title] * 100 / totalLen;
+									titleWidth[title] = width;
+									if(width > maxWidth) {
+										maxWidth = width;
+										maxWidthTitle = title;
+									}
+								}
+							}
+							
+							tableBody += "<tr>";
+							for (i in titles) {
+								var title = titles[i];
+								var content = rows[index][title];
+								if(index + 1 == rows.length) {
+									if(title == maxWidthTitle) {
+										tableBody += "<td>";
+									} else {
+										tableBody += "<td style='width: "+titleWidth[title]+"%; min-width: 100px;'>";
+									}
+								} else {
+									tableBody += "<td style='min-width: 100px;'>";
+								}
+								tableBody += content;
+								tableBody += "</td>";
+								var len = contentLenth[title];
+								if(len == null) {
+									len = 0;
+								}
+								contentLenth[title] = len + content.length;
+							}
+							tableBody += "</tr>";
+						}
+						$("#result").html(tableBody);
+					} else {
+						$("#result").html("");
+					}
+				},
+				error : function() {
+					
+				}
+			});
+		});
+		$("#recentSql").change(function(event) {
+			$("#sql").val(event.target.value);
+		});
+	});
+</script>
+</head>
+<body>
+	<span>执行历史记录：</span>
+	<div>
+		<select id="recentSql" style="width: 80%">
+			<option value="select * from novel">select * from novel</option>
+			<option value="select * from chapter">select * from chapter</option>
+			<option value="select * from behavioral_statistics">select * from behavioral_statistics</option>
+		</select>
+	</div>
+	<div>
+		<button id="execute">执行SQL</button>
+	</div>
+	<textarea id="sql" rows="20" style="width: 80%">select * from novel</textarea>
+	<div>
+		<table id="result" border="1" cellspacing="0" cellpadding="5" style="word-wrap: break-word; word-break: break-all;"></table>
+	</div>
+</body>
+</html>
