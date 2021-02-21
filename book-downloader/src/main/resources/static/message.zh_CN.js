@@ -17,7 +17,8 @@ Aqier.putLocal("zh_CN", { // 国际化
     	read : "阅读",
     	catalog : "目录",
     	download : "下载",
-    	sync : "同步"
+    	sync : "同步",
+    	scan : "全网扫描"
     },
     catalog : {
     	title : "章节名称",

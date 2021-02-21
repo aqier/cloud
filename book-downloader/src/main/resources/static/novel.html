@@ -21,6 +21,11 @@ function sync(name) {
 		}
 	});
 }
+function syncAll() {
+	Aqier.getJSON("./novel/scan", null, function(data) {
+		alert("正在扫描网络上的所有书籍");
+	});
+}
 function getQueryParams(params) {
 	params.rows[0].name = $(".search").val();
 	return params;
@@ -64,15 +69,16 @@ $(function() {
   <div class="table-area">  
     <!-- 搜索区 -->
 	<div class="row split-around search-area">
-	    <div class="col-md-6 col-md-6 col-md-offset-3">
+	    <div class="col-md-8 col-md-offset-2">
 	        <input id="search" name="search" class="form-control search" type="text" data-fn="enter2search-btn" placeholder="输入小说全名"/>
 	        <button id="search-btn" type="button" class="btn btn-primary search-btn">{[Aqier.i18n('index.search')]}</button>
+	        <button id="search-all-btn" type="button" onclick="syncAll()" class="btn btn-primary">{[Aqier.i18n('novel.scan')]}</button>
 	    </div>
 	</div>
 	
 	<!-- 表格 -->
 	<div class="row">
-	    <div class="col-md-6 col-md-offset-3">
+	    <div class="col-md-8 col-md-offset-2" style="height: 80%">
 	        <table id="result" class="table">
 	        </table>
 	    </div>

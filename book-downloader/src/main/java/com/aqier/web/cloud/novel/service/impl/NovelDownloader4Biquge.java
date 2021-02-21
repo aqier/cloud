@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import com.aqier.web.cloud.novel.dto.ChapterDTO;
 import com.aqier.web.cloud.novel.dto.NovelDTO;
+import com.aqier.web.cloud.novel.dto.model.Novel;
 
 /**
  * 笔趣阁小说下载器
@@ -89,17 +90,21 @@ public class NovelDownloader4Biquge extends NovelDownloader {
      * @since 2018年3月28日
      */
     @Override
-    protected List<String> scanNovelName() {
+    protected List<Novel> scanNovel() {
         String pageContent = loadPageContent("https://www.biquge5200.com/xiaoshuodaquan/");
         String content = StringUtils.substringBetween(pageContent, "<div id=\"main\">", "<div class=\"dahengfu\">");
         List<String> links = pairMatch("<a ", "</a>", true, content);
-        List<String> novelNames = new ArrayList<>();
+        List<Novel> novels = new ArrayList<>();
         for (String link : links) {
             String name = StringUtils.substringBetween(link, ">", "<");
+            String catalogUrl = StringUtils.substringBetween(link, "href=\"", "\">");
             if (name != null) {
-                novelNames.add(name);
+            	Novel novel = new Novel();
+            	novel.setName(name);
+				novel.setCatalogUrl(catalogUrl);
+                novels.add(novel);
             }
         }
-        return novelNames;
+        return novels;
     }
 }

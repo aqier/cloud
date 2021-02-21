@@ -39,16 +39,20 @@ public class SqlConsoleController {
     private DataSource dataSource;
 
     @PostMapping("/execute")
-    public Page<Map<String, String>> exeuctor(String sql, @RequestBody Page<Map<String, String>> page)
+    public Page<Map<String, String>> exeuctor(@RequestBody Page<String> page)
         throws SQLException {
         if (page.getPageSize() > 100) {
             page.setPageSize(100);
         }
+        String sql = page.getFirstRow();
         if (StringUtils.isBlank(sql)) {
             page.setRows(Collections.emptyList());
-            return page;
+            return new Page<Map<String,String>>();
         }
         sql = sql.trim();
+        if(sql.endsWith(";")) {
+        	sql = sql.substring(0, sql.length() - 1);
+        }
         try (Connection con = dataSource.getConnection()) {
             List<Map<String, String>> result;
             if (sql.toLowerCase().startsWith("select")) {

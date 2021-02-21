@@ -65,7 +65,7 @@ $.extend($.fn.bootstrapTable.defaults, {
     sidePagination : "server", /*设置在哪里进行分页，可选值为 'client' 或者 'server'。设置 'server'时，必须设置服务器数据地址（url）或者重写ajax方法*/
     pageNumber : 1, /*[1]:如果设置了分页，首页页码*/
     pageSize : 10, /*如果设置了分页，页面数据条数*/
-    pageList : [10, 20, 50], /*如果设置了分页，设置可供选择的页面数据条数。设置为 All 或者 Unlimited，则显示所有记录*/
+    pageList : [5, 10, 20, 50], /*如果设置了分页，设置可供选择的页面数据条数。设置为 All 或者 Unlimited，则显示所有记录*/
     escape : true, /*true: 转义HTML字符串，替换 &, <, >, ", \`, 和 ' 字符。*/
     search : true, /*是否启用搜索框*/
     searchOnEnterKey : true, /*设置为 true时，按回车触发搜索方法，否则自动触发搜索方法*/

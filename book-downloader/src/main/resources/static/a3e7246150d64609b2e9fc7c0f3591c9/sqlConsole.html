@@ -19,12 +19,13 @@ div {
 	$(function() {
 		$("#execute").click(function() {
 			$.ajax({
-				url : "./sql/execute?sql=" + $("#sql").val(),
+				url : "./sql/execute",
 				method : "post",
 				contentType : "application/json",
 				data : JSON.stringify({
 					pageNo : 1,
-					pageSize : 50
+					pageSize : 50,
+					rows: [$("#sql").val()]
 				}),
 				success : function(page) {
 					var rows = page.rows;
