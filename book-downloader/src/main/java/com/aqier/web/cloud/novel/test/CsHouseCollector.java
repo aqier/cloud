@@ -22,7 +22,7 @@ import org.springframework.util.FileCopyUtils;
 import org.springframework.web.client.RestTemplate;
 
 /**
- * @author yuloang.wang@Aqier.com
+ * @author yulong.wang@Aqier.com
  * @since 2019年10月25日
  */
 public class CsHouseCollector {
@@ -38,7 +38,7 @@ public class CsHouseCollector {
     }
 
     /**
-     * @author yuloang.wang@Aqier.com
+     * @author yulong.wang@Aqier.com
      * @throws Exception
      * @since 2019年10月26日
      */
@@ -91,7 +91,7 @@ public class CsHouseCollector {
      * @param url 网址
      * @param retryNum 重试次数
      * @return
-     * @author yuloang.wang@Aqier.com
+     * @author yulong.wang@Aqier.com
      * @throws InterruptedException
      * @since 2019年10月26日
      */
@@ -140,7 +140,7 @@ public class CsHouseCollector {
     /**
      * @param unicode
      * @return
-     * @author yuloang.wang@Aqier.com
+     * @author yulong.wang@Aqier.com
      * @since 2019年10月26日
      */
     private static String unicode2String(String unicode) {

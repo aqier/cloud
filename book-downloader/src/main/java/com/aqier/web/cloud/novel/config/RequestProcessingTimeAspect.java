@@ -1,6 +1,6 @@
 /*
  * Domain Aqier.com Reserve Copyright
- * @author yuloang.wang@Aqier.com
+ * @author yulong.wang@Aqier.com
  * @since 2018年4月17日
  */
 package com.aqier.web.cloud.novel.config;

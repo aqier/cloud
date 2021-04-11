@@ -1,3 +1,6 @@
+encrypt:
+  key: ${aqier.key} # 定义到配置中心有问题(即不能公共)
+
 server:
   port: ${port.novel:8894}
 
@@ -20,7 +23,16 @@ spring:
     testOnBorrow: false
     testWhileIdle: true
     timeBetweenEvictionRunsMillis: 18800
-    
+  cloud:
+    config:
+      failFast: false
+      useInsecureTrustManager: ${useInsecureTrustManager:true}
+      username : '{cipher}f911fa950c48b56f2f48296e8404818a424d10c32f857f3d496d3b8a66da51f6'
+      password: '{cipher}6d82dfc300bdef54a58de5ecc427e4d24faab7fdcbc1b1791b9ef739c51b9e7a64c682c6cab9ef73d6f7a3fb07c1f52996875c044cacb0e7fb96920132cb465e'
+      uri: ${protocol.config:https}://${domain.config.value:${domain.default.value:localhost.aqier.com}}:${port.config:8888}
+      profile: ${config.profile:common}
+      label: ${config.label:develop}
+      name: default
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8
